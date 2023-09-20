@@ -13,7 +13,7 @@
         <h2>Login</h2>
         <form action="#" method="post">
             <div class="input-box">
-                <label for="username">Username:</label>
+                <label for="username">Mo:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="input-box">
