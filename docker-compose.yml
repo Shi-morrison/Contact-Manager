@@ -9,6 +9,7 @@ services:
     volumes:
       - ./app:/var/www/html
     ports:
+    command: sh -c "docker-php-ext-install mysqli pdo pdo_mysql && apache2-foreground"
       - 80:80
       - 443:443
     networks:
