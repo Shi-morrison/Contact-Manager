@@ -12,7 +12,10 @@ services:
     volumes:
       - ./app:/var/www/html
     ports:
-      - 8080:80
+      - 80:80
+      - 443:443
+    networks:
+      - lamp-docker
   db:
     restart: always
     image: mysql
@@ -21,7 +24,11 @@ services:
       - ./db_script/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       MYSQL_ROOT_PASSWORD: "password"
+    networks:
+      - lamp-docker
   phpmyadmin:
+    depends_on:
+      - db
     restart: always
     image: phpmyadmin/phpmyadmin
     ports:
@@ -29,5 +36,10 @@ services:
     environment:
       - PMA_HOST=db
       - PMA_PORT=3306
+    networks:
+      - lamp-docker
 volumes:
   db:
+networks:
+  lamp-docker:
+    driver: bridge
