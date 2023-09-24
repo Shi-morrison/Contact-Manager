@@ -1,8 +1,5 @@
 version: "3"
 
-#TODO
-# come back and figure out how to configure apache2
-# then i can push
 services:
   web:
     restart: always
@@ -23,7 +20,8 @@ services:
     volumes:
       - ./db_script/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      # this will be changed later once server is on server
+      MYSQL_ROOT_PASSWORD: password
     networks:
       - lamp-docker
   phpmyadmin:
