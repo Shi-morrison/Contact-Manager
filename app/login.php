@@ -30,6 +30,30 @@
 
         </div>
     </header>
+
+    <main>
+        <section id="hero">
+            <div class="login-box">
+                <h2>Login</h2>
+                <form action="#" method="post">
+                    <div class="input-box">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <a href="home.php" style="text-decoration: none;" class="submit-button" type="submit">Login</a>
+                    <a class="register-button" href="register.php"
+                        style="text-decoration: none; font-size: 16px;">Register</a>
+                </form>
+            </div>
+
+        </section>
+    </main>
+
+
     <script>
         var toggleBtn = document.querySelector(".toggle_btn")
         var toggleBtnIcon = document.querySelector(".toggle_btn i")
@@ -45,7 +69,6 @@
         }
 
     </script>
-
 </body>
 
 </html>
