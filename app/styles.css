@@ -1,0 +1,162 @@
+* 
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.login-body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-box {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.input-box {
+    margin-bottom: 15px;
+    text-align: left;
+    resize: both;
+}
+
+.input-box label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    resize: both;
+}
+
+.input-box input {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 5px;
+    resize: both;
+}
+
+.submit-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.register-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.welcome {
+    position: fixed;
+    top: 0;
+    left: 3;
+    justify-content: top;
+}
+
+.outline {
+    border-right: 2px solid black;
+    max-width: 15%;
+    display: inline-flexbox;
+    align-items: center;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.profile-pic {
+    clip-path: circle();
+    max-width: 80%;
+    height: auto;
+    width: auto\9;
+}
+
+.spacing {
+    height: 1px;
+    background-color: #000;
+}
+
+.info {
+    margin-top: 3px;
+    text-align: center;
+}
+
+.background-image {
+    background: url(https://png.pngtree.com/background/20210711/original/pngtree-scary-graveyard-in-the-woods---halloween-background-picture-image_1154763.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.transparent {
+    background-color: rgba(255, 255, 254, 0.95);
+    max-width: 90%;
+    bottom: 0%;
+    margin-left: 5%;
+    margin-top: 10%;
+    display: flex;
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    justify-content: space-between;
+}
+
+.contact-list {
+    flex: 1;
+    padding: 20px;
+}
+
+.contact {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.contact-list h2 {
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.contact-list h3 {
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.contact-button {
+    background-color: #7f5af0; /* Set the desired color */
+    color: #fff; /* Text color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 15px;
+}
