@@ -2,6 +2,8 @@ version: "3"
 
 services:
   web:
+    env_file:
+      - ./.env
     restart: always
     image: php:8.1.23-apache
     depends_on:
@@ -15,23 +17,26 @@ services:
     networks:
       - lamp-docker
   db:
+    env_file:
+      - ./.env
     restart: always
     image: mysql
     command: --init-file /docker-entrypoint-initdb.d/init.sql
     volumes:
       - ./db_script/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
-      # this will be changed later once server is on server
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     networks:
       - lamp-docker
   phpmyadmin:
+    env_file:
+      - ./.env
     depends_on:
       - db
     restart: always
     image: phpmyadmin/phpmyadmin
     ports:
-      - 8081:80
+      - ${PHP_MY_ADMIN_PORT}:80
     environment:
       - PMA_HOST=db
       - PMA_PORT=3306
