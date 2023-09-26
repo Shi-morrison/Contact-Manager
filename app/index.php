@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="background-image">
+<body>
+    <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video>
+
+
     <header>
         <div class="navbar">
             <div class="logo"> <a href="index.php">Home</a></div>

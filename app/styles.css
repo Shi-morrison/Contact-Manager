@@ -264,7 +264,7 @@ header {
 }
 
 .navbar .toggle_btn {
-    color: blue;
+    color: red;
     font-size: 1.5rem;
     cursor: pointer;
     display: none;
@@ -375,4 +375,18 @@ section#hero {
     justify-content: center;
     text-align: center;
     height: calc(100vh - 60px);
+}
+
+/* Backround Video */
+video {
+    z-index: -1000;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    transform: (-50%, -50%);
+    -webkit-transform: (-50%, -50%);
+    -moz-transform: (-50%, -50%);
+    -ms-transform: (-50%, -50%);
+    -o-transform: (-50%, -50%);
+    object-fit: cover;
 }

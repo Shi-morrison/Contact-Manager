@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="background-image">
+<body>
+    <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video>
     <header>
         <div class="navbar">
             <div class="logo"> <a href="index.php">Home</a></div>
@@ -33,6 +34,32 @@
 
     <main>
         <section id="hero">
+
+            <div class="close-btn">&times;</div>
+            <div class="form">
+                <h2>Log in</h2>
+                <div class="form-element">
+                    <label for="username">Username</label>
+                    <input type="text" id="email" placeholder="Enter email">
+                </div>
+                <div class="form-element">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter password">
+                </div>
+                <div class="form-element">
+                    <input type="text">
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
             <div class="login-box">
                 <h2>Login</h2>
                 <form action="#" method="post">
