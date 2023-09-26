@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Attempting to add contact with given information to the user with user_id
     $newContactID = addContact($user_id, $first_name, $last_name, $email, $phone);
+
+    header('Content-Type: application/json');
     echo json_encode($newContactID);
 
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -69,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Attempting to delete the contact with contact_id
     $deleted = deleteContact($contact_id);
-    echo json_encode($deleted);
 
 } else {
 
@@ -120,16 +121,109 @@ function returnWithError($err, $responseCode)
     exit;
 }
 
-/**
- * I AM STILL WORKING ON IMPLEMENTING EVERYTHING FROM THIS POINT FORWARD 
- */
-
 // Function to add a contact to the database
 function addContact($user_id, $firstName, $lastName, $email, $phone )
 {
-    # TODO
-    $todo = "Adding contact function";
-    return $todo;
+    global $conn;
+
+    // Getting current date to set date_created column for contact
+    $date = date('Y-m-d');
+
+    // Using SQL query to insert contact information outlined in database schema
+    $sql = "INSERT INTO contacts (user_id, first_name, last_name, email, phone, date_created)
+            VALUES (?, ?, ?, ?, ?, ?)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isssss", $user_id, $firstName, $lastName, $email, $phone, $date);
+    $success = $stmt->execute();
+    $stmt->close();
+
+    if (!$success) {
+        $error = "Failed to add contact to database";
+        returnWithError($error, 400);
+    }
+
+    // Returning response code 201 to indicate a successful creation
+    http_response_code(201);
+
+    // Getting contact_id of this contact to return to frontend
+    $lastInsertId = $conn->insert_id;
+    $conn->close();
+
+    return array('contact_id' => $lastInsertId);
+}
+
+/**
+ * My definition of a valid contact is one that has some valid name associated
+ * with either an email or phone number. Returns true if the contact is valid,
+ * returns an error if not.
+ */
+function validateContact( $firstName, $email, $phone )
+{
+    global $conn;
+
+    // Checking that first name is valid
+    if (!is_string($firstName) || (trim($firstName) === "")) {
+        $error = "Please provide a valid First Name";
+        returnWithError($error, 400);
+    }
+
+    $emailExists = trim($email) !== "";
+    $phoneExists = trim($phone) !== "";
+
+    // Ensuring that there is an email or a phone number to use with the contact
+    if (!$emailExists && !$phoneExists) {
+        $error = "Contacts require either a valid Email or Phone Number";
+        returnWithError($error, 400);
+    }
+
+    // Checking that email has email doesn't have xxx@xxx.xxx format
+    $validEmail = filter_var($email, FILTER_VALIDATE_EMAIL);
+    if (!$validEmail && $emailExists) {
+        $error = "Invalid Email Address";
+        returnWithError($error, 400);
+    }
+
+    // Checking that phone only has numbers and dashes
+    $filteredPhone = str_replace('-', '', $phone);
+    $validPhone = is_numeric($filteredPhone);
+    if (!$validPhone && $phoneExists) {
+        $error = "Invalid Phone Number";
+        returnWithError($error, 400);
+        exit;
+    }
+
+    return true;
+}
+
+/**
+ * Function to make sure that a contact has not already been added with the
+ * first and last name under a user_id. Returns an error if contact already exits
+ */
+function checkForDuplicate($user_id, $first_name, $last_name)
+{
+    global $conn;
+
+    // Using SQL query to count how many rows exist with a user_id and the same
+    // first and last name
+    $sql = "SELECT COUNT(*) AS count FROM contacts WHERE user_id = ? AND first_name = ? AND last_name = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iss", $user_id, $first_name, $last_name);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    $stmt->close();
+
+    // If the count is greater than 0, data already exists with this first and last name
+    if ($row['count'] > 0) {
+        $error = "A contact already exists with this first and last name";
+        returnWithError($error, 400);
+    }
+
+    return true;
 }
 
 // Function to get all of the contacts for a user with that user_id
@@ -185,28 +279,5 @@ function deleteContact($contact_id)
 {
     # TODO
     $todo = "Deleting contact function";
-    return $todo;
-}
-
-/** 
- * My definition of a valid contact is one that has some valid name associated
- * with either an email or phone number. Returns true if the contact is valid,
- * returns an error if not.
- */
-function validateContact( $firstName, $email, $phone )
-{
-    # TODO
-    $todo = "Validating contact function";
-    return $todo;
-}
-
-/**
- * Function to make sure that a contact has not already been added with the
- * first and last name under a user_id. Returns an error if contact already exits
- */
-function checkForDuplicate($user_id, $first_name, $last_name)
-{
-    # TODO
-    $todo = "Checking for duplicates function";
     return $todo;
 }
