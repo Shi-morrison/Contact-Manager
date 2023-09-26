@@ -37,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newContactID = addContact($user_id, $first_name, $last_name, $email, $phone);
 
     header('Content-Type: application/json');
+
+    header('Content-Type: application/json');
     echo json_encode($newContactID);
 
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -153,6 +155,62 @@ function addContact($user_id, $firstName, $lastName, $email, $phone )
     return array('contact_id' => $lastInsertId);
 }
 
+// Function to get all of the contacts for a user with that user_id
+function getContacts($user_id)
+{
+    # TODO
+    $todo = "Getting contact function";
+    return $todo;
+}
+
+// This function calls the helper edit functions to edit subfields of the contact
+function editContact($contact_id, $newFirstName, $newLastName, $newEmail, $newPhone)
+{
+    # TODO
+    $todo = "Editing contact function";
+    return $todo;
+}
+
+// Helper function of editContact() to edit the first name
+function editFirstName($contact_id, $newFirstName)
+{
+    # TODO
+    $todo = "Helper edit function (first name)";
+    return $todo;
+}
+
+// Helper function of editContact() to edit the last name
+function editLastName($contact_id, $newLastName)
+{
+    # TODO
+    $todo = "Helper edit function (last name)";
+    return $todo;
+}
+
+// Helper function of editContact() to edit the email
+function editEmail($contact_id, $newEmail)
+{
+    # TODO
+    $todo = "Helper edit function (email)";
+    return $todo;
+}
+
+// Helper function of editContact() to edit the phone number
+function editPhone($contact_id, $newPhone)
+{
+    # TODO
+    $todo = "Helper edit function (phone)";
+    return $todo;
+}
+
+// Function to delete the contact with contact_id from database
+function deleteContact($contact_id)
+{
+    # TODO
+    $todo = "Deleting contact function";
+    return $todo;
+}
+
 /**
  * My definition of a valid contact is one that has some valid name associated
  * with either an email or phone number. Returns true if the contact is valid,
@@ -224,60 +282,4 @@ function checkForDuplicate($user_id, $first_name, $last_name)
     }
 
     return true;
-}
-
-// Function to get all of the contacts for a user with that user_id
-function getContacts($user_id)
-{
-    # TODO
-    $todo = "Getting contact function";
-    return $todo;
-}
-
-// This function calls the helper edit functions to edit subfields of the contact
-function editContact($contact_id, $newFirstName, $newLastName, $newEmail, $newPhone)
-{
-    # TODO
-    $todo = "Editing contact function";
-    return $todo;
-}
-
-// Helper function of editContact() to edit the first name
-function editFirstName($contact_id, $newFirstName)
-{
-    # TODO
-    $todo = "Helper edit function (first name)";
-    return $todo;
-}
-
-// Helper function of editContact() to edit the last name
-function editLastName($contact_id, $newLastName)
-{
-    # TODO
-    $todo = "Helper edit function (last name)";
-    return $todo;
-}
-
-// Helper function of editContact() to edit the email
-function editEmail($contact_id, $newEmail)
-{
-    # TODO
-    $todo = "Helper edit function (email)";
-    return $todo;
-}
-
-// Helper function of editContact() to edit the phone number
-function editPhone($contact_id, $newPhone)
-{
-    # TODO
-    $todo = "Helper edit function (phone)";
-    return $todo;
-}
-
-// Function to delete the contact with contact_id from database
-function deleteContact($contact_id)
-{
-    # TODO
-    $todo = "Deleting contact function";
-    return $todo;
 }
