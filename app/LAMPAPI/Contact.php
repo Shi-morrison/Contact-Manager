@@ -37,8 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newContactID = addContact($user_id, $first_name, $last_name, $email, $phone);
 
     header('Content-Type: application/json');
-
-    header('Content-Type: application/json');
     echo json_encode($newContactID);
 
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -49,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Attempting to read all contacts of user with user_id
     $contacts = getContacts($user_id);
+
     echo json_encode($contacts);
 
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
@@ -63,6 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Attempting to edit the contact of contact with contact_id
     $updated = editContact($contact_id, $newFirstName, $newLastName, $newEmail, $newPhone);
+
+    header('Content-Type: application/json');
     echo json_encode($updated);
 
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
@@ -166,41 +167,113 @@ function getContacts($user_id)
 // This function calls the helper edit functions to edit subfields of the contact
 function editContact($contact_id, $newFirstName, $newLastName, $newEmail, $newPhone)
 {
-    # TODO
-    $todo = "Editing contact function";
-    return $todo;
+    // Updating each field of the contact to the new value if it is not "null"
+    $success = true;
+    if ($newFirstName != "null") {
+        $success = $success & editFirstName($contact_id, $newFirstName);
+    }
+
+    if ($newLastName != "null") {
+        $success = $success & editLastName($contact_id, $newLastName);
+    }
+
+    if ($newEmail != "null") {
+        $success = $success & editEmail($contact_id, $newEmail);
+    }
+
+    if ($newPhone != "null") {
+        $success = $success & editPhone($contact_id, $newPhone);
+    }
+
+    // Setting status code to 200 to indicate success
+    http_response_code(200);
+
+    // returning newly updated contact_id
+    return array('contact_id' => $contact_id);
 }
 
 // Helper function of editContact() to edit the first name
 function editFirstName($contact_id, $newFirstName)
 {
-    # TODO
-    $todo = "Helper edit function (first name)";
-    return $todo;
+    global $conn;
+
+    // SQL query to set the first_name to the new value
+    $sql = "UPDATE contacts SET first_name = ? WHERE contact_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $newFirstName, $contact_id);
+    $stmt->execute();
+
+    if (!$stmt->execute()) {
+        $error = "Error updating first name: " . $stmt->error;
+        $stmt->close();
+        returnWithError($error, 400);
+    }
+
+    $stmt->close();
+    return true;
 }
 
 // Helper function of editContact() to edit the last name
 function editLastName($contact_id, $newLastName)
 {
-    # TODO
-    $todo = "Helper edit function (last name)";
-    return $todo;
+    global $conn;
+
+    // SQL query to set the last_name to the new value
+    $sql = "UPDATE contacts SET last_name = ? WHERE contact_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $newLastName, $contact_id);
+    $stmt->execute();
+
+    if (!$stmt->execute()) {
+        $error = "Error updating last name: " . $stmt->error;
+        $stmt->close();
+        returnWithError($error, 400);
+    }
+
+    $stmt->close();
+    return true;
 }
 
 // Helper function of editContact() to edit the email
 function editEmail($contact_id, $newEmail)
 {
-    # TODO
-    $todo = "Helper edit function (email)";
-    return $todo;
+    global $conn;
+
+    // SQL query to set the email to the new value
+    $sql = "UPDATE contacts SET email = ? WHERE contact_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $newEmail, $contact_id);
+    $stmt->execute();
+
+    if (!$stmt->execute()) {
+        $error = "Error updating email: " . $stmt->error;
+        $stmt->close();
+        returnWithError($error, 400);
+    }
+
+    $stmt->close();
+    return true;
 }
 
 // Helper function of editContact() to edit the phone number
 function editPhone($contact_id, $newPhone)
 {
-    # TODO
-    $todo = "Helper edit function (phone)";
-    return $todo;
+    global $conn;
+
+    // SQL query to set the phone number to the new value
+    $sql = "UPDATE contacts SET phone = ? WHERE contact_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $newPhone, $contact_id);
+    $stmt->execute();
+
+    if (!$stmt->execute()) {
+        $error = "Error updating phone number: " . $stmt->error;
+        $stmt->close();
+        returnWithError($error, 400);
+    }
+
+    $stmt->close();
+    return true;
 }
 
 // Function to delete the contact with contact_id from database
