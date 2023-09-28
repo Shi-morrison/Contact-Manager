@@ -5,7 +5,9 @@ services:
     env_file:
       - ./.env
     restart: always
-    image: php:8.1.23-apache
+    build:
+      context: "./Docker_Web"
+      dockerfile: Dockerfile
     depends_on:
       - db
     volumes:
@@ -13,7 +15,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    command: sh -c "docker-php-ext-install mysqli pdo pdo_mysql && apache2-foreground"
     networks:
       - lamp-docker
   db:
@@ -23,7 +24,7 @@ services:
     image: mysql
     command: --init-file /docker-entrypoint-initdb.d/init.sql
     volumes:
-      - ./db_script/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     networks:
