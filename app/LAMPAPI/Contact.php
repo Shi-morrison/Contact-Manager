@@ -1,8 +1,12 @@
 <?php
-require_once('../config/config.php');
 
 // Setting global variable to use database connection for different operations
 global $conn;
+
+$dbServer = getenv('DB_SERVER');
+$dbUsername = getenv('DB_USERNAME');
+$dbPassword = getenv('DB_PASSWORD');
+$dbName = getenv('DB_NAME');
 
 // Attempting to establish MySQL database connection
 $conn = new mysqli($dbServer, $dbUsername, $dbPassword, $dbName);
@@ -44,10 +48,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Parsing JSON data from frontend
     $data = parseJsonData();
     $user_id = $data['user_id'];
+    $contact_id = $data['contact_id'];
 
-    // Attempting to read all contacts of user with user_id
-    $contacts = getContacts($user_id);
+    if ($contact_id == "null"){
+        // Attempting to read all contacts of user with user_id
+        $contacts = getAllContacts($user_id);
+    } else {
+        // Attempting to read a specific contact with contact_id
+        $contacts = getContact($user_id, $contact_id);
+    }
 
+    header('Content-Type: application/json');
     echo json_encode($contacts);
 
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
@@ -156,12 +167,59 @@ function addContact($user_id, $firstName, $lastName, $email, $phone )
     return array('contact_id' => $lastInsertId);
 }
 
-// Function to get all of the contacts for a user with that user_id
-function getContacts($user_id)
+// Function to get a specific contact when given a user_id and contact_id
+function getContact($user_id, $contact_id)
 {
-    # TODO
-    $todo = "Getting contact function";
-    return $todo;
+    global $conn;
+
+    // Using SQL query to get contact outlined in database schema
+    $sql = "SELECT * FROM contacts WHERE user_id = ? AND contact_id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $user_id, $contact_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    // Check if this contact_id doesn't exist in which case we exit with error
+    if ($row === null) {
+        $error = "Error retrieving contact";
+        returnWithError($error, 400);
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    // Return the row with the specific contact information
+    return $row;
+}
+
+
+// Function to get all contacts for a user with user_id
+function getAllContacts($user_id)
+{
+    global $conn;
+
+    // Using SQL query to get contacts outlined in database schema
+    $sql = "SELECT * FROM contacts WHERE user_id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $stmt->close();
+    $conn->close();
+
+    // Iterate through rows and add contacts information to an array
+    $contacts = array();
+    while ($row = $result->fetch_assoc()) {
+        $contacts[] = $row;
+    }
+
+    // Return array with all contacts for user_id
+    return array('contacts' => $contacts);
 }
 
 // This function calls the helper edit functions to edit subfields of the contact
@@ -279,9 +337,26 @@ function editPhone($contact_id, $newPhone)
 // Function to delete the contact with contact_id from database
 function deleteContact($contact_id)
 {
-    # TODO
-    $todo = "Deleting contact function";
-    return $todo;
+    global $conn;
+
+    // SQL query to delete the contact
+    $sql = "DELETE FROM contacts WHERE contact_id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $contact_id);
+    $stmt->execute();
+
+    // Check for failed execution of deletion
+    if (!$stmt->execute()) {
+        $error = "Error deleting records: " . $stmt->error;
+        $stmt->close();
+        returnWithError($error, 400);
+    }
+
+    $stmt->close();
+
+    // Using code 204 to designate that there is no content to return
+    http_response_code(204);
 }
 
 /**
