@@ -1,2 +1,8 @@
+# api config file
 config/
+
+#holds local database login information
 .env
+
+# devs personal vscode settings
+/.vscode
