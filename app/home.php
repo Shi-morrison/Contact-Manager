@@ -15,21 +15,20 @@
   <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video>
   <header>
     <div class="navbar">
-      <div class="logo"> <a href="index.php">Home</a></div>
-      <ul class="links">
-        <li><a href="register.php">Sign Up</a></li>
-        <li><a href="login.php">Log In</a></li>
-      </ul>
-
-      <div class="toggle_btn">
-        <i class="fa-solid fa-bars"></i>
+      <div> <a class="custom-btn btn-15" href="index.php">Home</a></div>
+      <div class="wrap">
+        <div class="search">
+          <input type="text" class="searchTerm" placeholder="Search for Contact">
+          <button type="submit" class="searchButton">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="dropdown_menu">
-      <li><a href="register.php">Sign Up</a></li>
-      <li><a href="login.php">Log In</a></li>
+      <div class="dropdown_menu">
+        <li><button id="show-register" class="custom-btn btn-15">Sign Up</button></li>
+        <li><button id="show-login" class="custom-btn btn-15">Log In</button></li>
 
-    </div>
+      </div>
   </header>
   <main>
     <section id="hero">

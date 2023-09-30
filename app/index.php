@@ -13,14 +13,12 @@
 
 <body>
     <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video>
-
-
     <header>
         <div class="navbar">
-            <div class="logo"> <a href="index.php">Home</a></div>
+            <div> <a class="custom-btn btn-15" href="index.php">Home</a></div>
             <ul class="links">
-                <li><a href="register.php">Sign Up</a></li>
-                <li><a href="login.php">Log In</a></li>
+                <li><button id="show-register" class="custom-btn btn-15">Sign Up</button></li>
+                <li><button id="show-login" class="custom-btn btn-15">Log In</button></li>
             </ul>
 
             <div class="toggle_btn">
@@ -28,12 +26,86 @@
             </div>
         </div>
         <div class="dropdown_menu">
-            <li><a href="register.php">Sign Up</a></li>
-            <li><a href="login.php">Log In</a></li>
+            <li><button id="show-register" class="custom-btn btn-15">Sign Up</button></li>
+            <li><button id="show-login" class="custom-btn btn-15">Log In</button></li>
 
         </div>
     </header>
+
+    <main>
+        <section id="hero">
+
+            <div class="center">
+                <!-- <button id="show-login">Login</button> -->
+            </div>
+            <div class="popup">
+                <div class="close-btn">&times;</div>
+                <form class="form">
+                    <h2>Log in</h2>
+                    <div class="form-element">
+                        <label for="email">Email</label>
+                        <input type="text" id="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-element">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter password">
+                    </div>
+                    <div class="form-element">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me">Remember me</label>
+                    </div>
+                    <div class="form-element">
+                        <button type="submit" href="home.php">Sign in</button>
+                    </div>
+                    <div class="form-element">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="center">
+            </div>
+            <div class="popup1">
+                <div class="close-btn">&times;</div>
+                <form class="form">
+                    <h2>Register</h2>
+                    <div class="form-element">
+                        <label for="email">Email</label>
+                        <input type="text" id="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-element">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="Enter password">
+                    </div>
+                    <div class="form-element">
+                        <button type="submit" href="home.php">Sign Up</button>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </main>
+
+
     <script>
+        document.querySelector("#show-login").addEventListener("click", function () {
+            if (!document.querySelector(".popup1").classList.contains("active")) {
+                document.querySelector(".popup").classList.add("active");
+            }
+        });
+        document.querySelector(".popup .close-btn").addEventListener("click", function () {
+            document.querySelector(".popup").classList.remove("active");
+        });
+
+        document.querySelector("#show-register").addEventListener("click", function () {
+            if (!document.querySelector(".popup").classList.contains("active")) {
+                document.querySelector(".popup1").classList.add("active");
+            }
+        });
+        document.querySelector(".popup1 .close-btn").addEventListener("click", function () {
+            document.querySelector(".popup1").classList.remove("active");
+        });
+
         var toggleBtn = document.querySelector(".toggle_btn")
         var toggleBtnIcon = document.querySelector(".toggle_btn i")
         var dropDownMenu = document.querySelector(".dropdown_menu")
@@ -42,13 +114,11 @@
             dropDownMenu.classList.toggle("open")
             const isOpen = dropDownMenu.classList.contains("open")
 
-            toggleBtnIcon.classList = isOpen
-                ? 'fa-solid fa-xmark'
-                : 'fa-solid fa-bars'
+            toggleBtnIcon.classList = isOpen ?
+                'fa-solid fa-xmark' :
+                'fa-solid fa-bars'
         }
-
     </script>
-
 </body>
 
 </html>
