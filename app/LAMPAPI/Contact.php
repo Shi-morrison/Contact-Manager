@@ -45,8 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     // Parsing JSON data from frontend
-    $data = parseJsonData();
-    $user_id = $data['user_id'];
+    // $data = parseJsonData();
+    // $user_id = $data['user_id'];
+
+    // GET from a query string
+    // http://example.com/retrieve_contacts.php?user_id=5
+    $user_id = $_GET['user_id'];
+
 
     // Attempting to read all contacts of user with user_id
     $contacts = getContacts($user_id);

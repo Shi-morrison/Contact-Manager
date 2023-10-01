@@ -15,7 +15,11 @@
   <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video>
   <header>
     <div class="navbar">
-      <div> <a class="custom-btn btn-15" href="index.php">Home</a></div>
+      <!-- <div> <a class="custom-btn btn-15" href="index.php">Home</a></div> -->
+      <ul class="links">
+        <li><button id="show-contact" class="custom-btn btn-15 contact">Create Contact</button></li>
+      </ul>
+
       <div class="wrap">
         <div class="search">
           <input type="text" class="searchTerm" placeholder="Search for Contact">
@@ -24,14 +28,48 @@
           </button>
         </div>
       </div>
-      <div class="dropdown_menu">
-        <li><button id="show-register" class="custom-btn btn-15">Sign Up</button></li>
-        <li><button id="show-login" class="custom-btn btn-15">Log In</button></li>
-
+      <div class="toggle_btn">
+        <i class="fa-solid fa-bars"></i>
       </div>
+    </div>
+    <div class="dropdown_menu">
+      <li>
+        <button id="show-contact-dropdown" class="custom-btn btn-15 contact">Create Contact</button>
+      </li>
+    </div>
   </header>
   <main>
     <section id="hero">
+      <!-- Add contact -->
+      <div class="center">
+      </div>
+      <div class="popup2">
+        <div class="close-btn">&times;</div>
+        <form class="form" onsubmit="event.preventDefault(); submitForm();">
+          <h2>Add Contact</h2>
+          <div class="form-element">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" placeholder="First Name">
+
+          </div>
+          <div class="form-element">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" placeholder="Last Name">
+          </div>
+          <div class="form-element">
+            <label for="email">Email</label>
+            <input type="text" id="email" placeholder="Email">
+          </div>
+          <div class="form-element">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" placeholder="Phone">
+          </div>
+          <div class="form-element">
+            <button type="submit" value="Submit">Create Contact</button>
+          </div>
+        </form>
+      </div>
+      <!-- End Add Contact -->
       <div class="transparent">
         <div class="outline" style="justify-content: left; background: #72757e;">
           <div class="info">
@@ -100,6 +138,55 @@
 
     </section>
   </main>
+  <script>
+
+    document.querySelector("#show-contact").addEventListener("click", function () {
+      document.querySelector(".popup2").classList.add("active");
+
+    });
+    document.querySelector(".popup2 .close-btn").addEventListener("click", function () {
+      document.querySelector(".popup2").classList.remove("active");
+    });
+
+    document.querySelector("#show-contact-dropdown").addEventListener("click", function () {
+      document.querySelector(".popup2").classList.add("active");
+    });
+
+    var toggleBtn = document.querySelector(".toggle_btn")
+    var toggleBtnIcon = document.querySelector(".toggle_btn i")
+    var dropDownMenu = document.querySelector(".dropdown_menu")
+
+    toggleBtn.onclick = function () {
+      dropDownMenu.classList.toggle("open")
+      const isOpen = dropDownMenu.classList.contains("open")
+
+      toggleBtnIcon.classList = isOpen ?
+        'fa-solid fa-xmark' :
+        'fa-solid fa-bars'
+    }
+
+    function submitForm() {
+      const data = {
+        user_id: 20,
+        first_name: document.getElementById("first_name").value,
+        last_name: document.getElementById("last_name").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value
+      };
+
+      fetch('./LAMPAPI/Contact.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        });
+    }
+  </script>
 
 </body>
 
