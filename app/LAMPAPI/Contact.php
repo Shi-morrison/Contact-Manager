@@ -1,14 +1,18 @@
 <?php
-require_once('../config/config.php');
 
 // Setting global variable to use database connection for different operations
 global $conn;
+
+$dbServer = getenv('DB_SERVER');
+$dbUsername = getenv('DB_USERNAME');
+$dbPassword = getenv('DB_PASSWORD');
+$dbName = getenv('DB_NAME');
 
 // Attempting to establish MySQL database connection
 $conn = new mysqli($dbServer, $dbUsername, $dbPassword, $dbName);
 
 // Unable to connect to MySQL database
-if ($conn->connect_error){
+if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
@@ -28,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $last_name = $data['last_name'];
     $email = $data['email'];
     $phone = $data['phone'];
-    
+
     // We exit if the contact is not valid or there is a duplicate
     validateContact($first_name, $email, $phone);
     checkForDuplicate($user_id, $first_name, $last_name);
@@ -38,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     header('Content-Type: application/json');
     echo json_encode($newContactID);
-
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     // Parsing JSON data from frontend
@@ -49,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contacts = getContacts($user_id);
 
     echo json_encode($contacts);
-
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 
     // Parsing JSON data from frontend
@@ -65,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     header('Content-Type: application/json');
     echo json_encode($updated);
-
 } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
 
     // Parsing JSON data from frontend
@@ -74,13 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Attempting to delete the contact with contact_id
     $deleted = deleteContact($contact_id);
-
 } else {
 
     // Handling for any other request, will not perform any database operations
     $error = "This request type is not supported";
     returnWithError($error, 400);
-
 }
 
 // Function to parse the JSON from the frontend, return an array containing the JSON data
@@ -125,7 +124,7 @@ function returnWithError($err, $responseCode)
 }
 
 // Function to add a contact to the database
-function addContact($user_id, $firstName, $lastName, $email, $phone )
+function addContact($user_id, $firstName, $lastName, $email, $phone)
 {
     global $conn;
 
@@ -289,7 +288,7 @@ function deleteContact($contact_id)
  * with either an email or phone number. Returns true if the contact is valid,
  * returns an error if not.
  */
-function validateContact( $firstName, $email, $phone )
+function validateContact($firstName, $email, $phone)
 {
     global $conn;
 
