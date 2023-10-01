@@ -33,10 +33,50 @@
     <main>
         <section id="hero">
 
+            <form id="retrieveForm">
+                <label for="user_id">User ID:</label>
+                <input type="text" id="user_id" name="user_id">
+                <input type="submit" value="Get Contacts">
+            </form>
+
+            <h2>Contacts:</h2>
+            <ul id="contactsList">
+                <!-- Contacts will be appended here -->
+            </ul>
+
 
         </section>
     </main>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#retrieveForm").submit(function (event) {
+                event.preventDefault();
+
+                const data = {
+                    user_id: $("#user_id").val()
+                };
+
+                $.ajax({
+                    url: './LAMPAPI/Contact.php',
+                    type: 'GET',
+                    data: data,
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (response) {
+                        $("#contactsList").empty(); // Clear previous contacts
+                        response.forEach(contact => {
+                            $("#contactsList").append(`<li>${contact.first_name} ${contact.last_name} - ${contact.email}</li>`);
+                        });
+                    },
+                    error: function (error) {
+                        console.error("Error retrieving contacts:", error);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

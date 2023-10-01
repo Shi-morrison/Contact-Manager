@@ -20,7 +20,6 @@
                 <li><button id="show-register" class="custom-btn btn-15">Sign Up</button></li>
                 <li><button id="show-login" class="custom-btn btn-15">Log In</button></li>
             </ul>
-
             <div class="toggle_btn">
                 <i class="fa-solid fa-bars"></i>
             </div>
