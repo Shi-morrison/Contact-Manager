@@ -78,6 +78,7 @@
         </form>
       </div>
       <!-- End Add Contact -->
+
       <div class="transparent">
         <div class="outline" style="justify-content: left; background: #72757e;">
           <div class="info">
