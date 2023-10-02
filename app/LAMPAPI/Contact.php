@@ -44,13 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode($newContactID);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    // Parsing JSON data from frontend
-    $data = parseJsonData();
-    $user_id = $data['user_id'];
-    $contact_id = $data['contact_id'];
+    // Retrieve query parameters
+    $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
+    $contact_id = isset($_GET['contact_id']) ? $_GET['contact_id'] : null;
 
-
-    if ($contact_id == "null"){
+    if (is_null($contact_id) || $contact_id == "null") {
         // Attempting to read all contacts of user with user_id
         $contacts = getAllContacts($user_id);
     } else {
@@ -60,6 +58,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     header('Content-Type: application/json');
     echo json_encode($contacts);
+
+
+    // // Parsing JSON data from frontend
+    // $data = parseJsonData();
+    // $user_id = $data['user_id'];
+    // $contact_id = $data['contact_id'];
+
+
+    // if ($contact_id == "null") {
+    //     // Attempting to read all contacts of user with user_id
+    //     $contacts = getAllContacts($user_id);
+    // } else {
+    //     // Attempting to read a specific contact with contact_id
+    //     $contacts = getContact($user_id, $contact_id);
+    // }
+
+    // header('Content-Type: application/json');
+    // echo json_encode($contacts);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 
     // Parsing JSON data from frontend
@@ -82,7 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contact_id = $data['contact_id'];
 
     // Attempting to delete the contact with contact_id
-    $deleted = deleteContact($contact_id);
+    // EDIT FOR WARNING/ERROR
+    //$deleted = deleteContact($contact_id);
 } else {
 
     // Handling for any other request, will not perform any database operations

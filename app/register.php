@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video>
+    <!-- <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video> -->
     <header>
         <div class="navbar">
             <div> <a class="custom-btn btn-15" href="index.php">Home</a></div>
@@ -32,17 +32,29 @@
     </header>
     <main>
         <section id="hero">
+            <div class="view">
+                <h1>Contact Viewer</h1>
 
-            <form id="retrieveForm">
-                <label for="user_id">User ID:</label>
-                <input type="text" id="user_id" name="user_id">
-                <input type="submit" value="Get Contacts">
-            </form>
+                <!-- Input for user ID -->
+                <div>
+                    <label for="user_id">User ID:</label>
+                    <input type="text" id="user_id" placeholder="Enter User ID">
+                </div>
 
-            <h2>Contacts:</h2>
-            <ul id="contactsList">
-                <!-- Contacts will be appended here -->
-            </ul>
+                <!-- Input for contact ID (optional) -->
+                <div>
+                    <label for="contact_id">Contact ID (optional):</label>
+                    <input type="text" id="contact_id" placeholder="Enter Contact ID or leave blank">
+                </div>
+
+                <button onclick="fetchContacts()">Fetch Contacts</button>
+
+                <!-- Display contacts here -->
+                <div id="contactsDisplay">
+                    Contacts here
+                </div>
+
+            </div>
 
 
         </section>
@@ -50,32 +62,54 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $("#retrieveForm").submit(function (event) {
-                event.preventDefault();
+        function fetchContacts() {
+            const userId = document.getElementById("user_id").value;
+            let contactId = document.getElementById("contact_id").value;
 
-                const data = {
-                    user_id: $("#user_id").val()
-                };
+            // If contactId is empty, set it to 'null' as per your PHP logic
+            if (!contactId) {
+                contactId = "null";
+            }
 
-                $.ajax({
-                    url: './LAMPAPI/Contact.php',
-                    type: 'GET',
-                    data: data,
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    success: function (response) {
-                        $("#contactsList").empty(); // Clear previous contacts
-                        response.forEach(contact => {
-                            $("#contactsList").append(`<li>${contact.first_name} ${contact.last_name} - ${contact.email}</li>`);
-                        });
-                    },
-                    error: function (error) {
-                        console.error("Error retrieving contacts:", error);
+            // Constructing the URL with query parameters
+            const apiUrl = `./LAMPAPI/Contact.php?user_id=${userId}&contact_id=${contactId}`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
                     }
+                    return response.json();
+                })
+                .then(data => {
+                    // Displaying the contacts (or contact)
+                    const contactsDiv = document.getElementById("contactsDisplay");
+                    contactsDiv.innerHTML = "";
+
+                    if (data.contacts && Array.isArray(data.contacts)) {
+                        data.contacts.forEach(contact => {
+                            const contactItem = `
+                    <div id="contact-list">
+                        <div id="contact">
+                            <p id="nameDisplay">${contact.first_name} ${contact.last_name}</p>
+                            <p id="emailDisplay">${contact.email}</p>
+                            <p id="phoneDisplay">${contact.phone}</p>
+                            <button id="delete">Delete</button>
+                        </div>
+                    </div>
+                        `;
+                            contactsDiv.innerHTML += contactItem;
+                        });
+                    } else {
+                        contactsDiv.innerHTML = "No contacts found.";
+                    }
+                })
+                .catch(error => {
+                    console.error("There was a problem with the fetch operation:", error.message);
                 });
-            });
-        });
+        }
+
+
     </script>
 </body>
 

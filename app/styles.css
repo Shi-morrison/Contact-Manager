@@ -174,7 +174,7 @@ button:hover {
 
 .transparent {
     background-color: rgba(255, 255, 254, 0.95);
-    max-width: 90%;
+    max-width: 100%;
     bottom: 0%;
     margin-left: 5%;
     margin-top: 10%;
@@ -802,4 +802,40 @@ video {
 .wrap {
     display: flex;
     flex-direction: row;
+}
+
+.view {
+    display: flex;
+    flex-direction: column;
+}
+
+#contact {
+    width: 80%;
+    margin: 10px auto;
+    border: 1px solid rgb(168, 151, 151);
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+#nameDisplay {
+    font-weight: bolder;
+}
+
+#delete {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px;
+    background: none;
+    border: 1px solid #dc4545;
+    color: #dc4545;
+    border-radius: 5px;
+}
+
+#delete:hover {
+    background-color: #dc4545;
+    color: white;
+    cursor: pointer;
 }

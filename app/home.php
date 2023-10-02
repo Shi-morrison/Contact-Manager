@@ -16,9 +16,17 @@
   <header>
     <div class="navbar">
       <!-- <div> <a class="custom-btn btn-15" href="index.php">Home</a></div> -->
-      <ul class="links">
+      <!-- <ul class="links">
         <li><button id="show-contact" class="custom-btn btn-15 contact">Create Contact</button></li>
-      </ul>
+      </ul> -->
+      <div>
+        <label for="user_id">User ID:</label>
+        <input type="text" id="user_id" placeholder="Enter User ID">
+        <label for="contact_id">Contact ID (optional):</label>
+        <input type="text" id="contact_id" placeholder="Enter Contact ID or leave blank">
+        <button onclick="fetchContacts()">Fetch Contacts</button>
+      </div>
+
 
       <div class="wrap">
         <div class="search">
@@ -86,51 +94,12 @@
           </div>
           <div class="spacing"></div>
           <div class="info">
-            <button class="contact-button" onClick="window.location.href='addContact.php'">Add Contact</button>
+            <button id="show-contact" class="custom-btn btn-15 contact">Create Contact</button>
           </div>
         </div>
         <section class="contact-list">
-          <ul>
-            <script>
-              function deleteItem() {
-                confirm("Are you sure?");
-              }
-            </script>
-            <div class="contact">
-              <img style="justify-content: center; width: 30px;" class="profile-pic"
-                src="https://i.pinimg.com/originals/c9/f2/6d/c9f26d445db1d64bfc1bdccc40dbdf4c.jpg">
-              <h2>Mohamad Mustafa</h2>
-              <h3>Phone: 123-456-7890</h3>
-              <h3>Email: example@example.com</h3>
-              <div>
-                <button class="contact-button">Edit</button>
-                <button class="contact-button" onClick="deleteItem()">Delete</button>
-              </div>
-            </div>
-            <div class="spacing"></div>
-            <div class="contact">
-              <img style="justify-content: center; width: 30px;" class="profile-pic"
-                src="https://i.pinimg.com/originals/c9/f2/6d/c9f26d445db1d64bfc1bdccc40dbdf4c.jpg">
-              <h2>John Doe</h2>
-              <h3>Phone: 123-456-7890</h3>
-              <h3>Email: example@example.com</h3>
-              <div>
-                <button class="contact-button">Edit</button>
-                <button class="contact-button" onClick="deleteItem()">Delete</button>
-              </div>
-            </div>
-            <div class="spacing"></div>
-            <div class="contact">
-              <img style="justify-content: center; width: 30px;" class="profile-pic"
-                src="https://i.pinimg.com/originals/c9/f2/6d/c9f26d445db1d64bfc1bdccc40dbdf4c.jpg">
-              <h2>Another Name</h2>
-              <h3>Phone: 123-456-7890</h3>
-              <h3>Email: example@example.com</h3>
-              <div>
-                <button class="contact-button">Edit</button>
-                <button class="contact-button" onClick="deleteItem()">Delete</button>
-              </div>
-            </div>
+          <ul id="contactsDisplay">
+
           </ul>
         </section>
       </div>
@@ -184,6 +153,61 @@
         .then(response => response.json())
         .then(data => {
           console.log(data);
+        });
+    }
+
+    function fetchContacts() {
+      const userId = document.getElementById("user_id").value;
+      let contactId = document.getElementById("contact_id").value;
+
+      // If contactId is empty, set it to 'null' as per your PHP logic
+      if (!contactId) {
+        contactId = "null";
+      }
+
+      // Constructing the URL with query parameters
+      const apiUrl = `./LAMPAPI/Contact.php?user_id=${userId}&contact_id=${contactId}`;
+
+      fetch(apiUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then(data => {
+          const contactsDiv = document.getElementById("contactsDisplay");
+          contactsDiv.innerHTML = "";
+
+          const renderContact = (contact) => {
+            return `
+                    <div class="contact">
+                        <img style="justify-content: center; width: 30px;" class="profile-pic"
+                           src="https://i.pinimg.com/originals/c9/f2/6d/c9f26d445db1d64bfc1bdccc40dbdf4c.jpg">
+                        <h2>${contact.first_name} ${contact.last_name}</h2>
+                        <h3>${contact.phone}</h3>
+                        <h3>${contact.email}</h3>
+                        <div>
+                            <button class="contact-button">Edit</button>
+                            <button class="contact-button" onClick="deleteItem()">Delete</button>
+                        </div>
+                    </div>
+                    <div class="spacing"></div>
+                `;
+          };
+
+          if (data.contacts && Array.isArray(data.contacts)) {
+            data.contacts.forEach(contact => {
+              contactsDiv.innerHTML += renderContact(contact);
+            });
+          } else if (data.user_id && data.contact_id) { // Check if the single contact properties exist in the data
+            contactsDiv.innerHTML = renderContact(data);
+          } else {
+            contactsDiv.innerHTML = "No contacts found.";
+          }
+        })
+        .catch(error => {
+          console.error("There was a problem with the fetch operation:", error.message);
         });
     }
   </script>
