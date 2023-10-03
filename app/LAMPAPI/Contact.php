@@ -99,7 +99,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Attempting to delete the contact with contact_id
     // EDIT FOR WARNING/ERROR
-    //$deleted = deleteContact($contact_id);
+    deleteContact($contact_id);
+    // Had to Add to ensure json response
+    echo json_encode(["status" => "success", "message" => "Contact deleted successfully"]);
+
 } else {
 
     // Handling for any other request, will not perform any database operations
@@ -369,7 +372,8 @@ function deleteContact($contact_id)
     $stmt->close();
 
     // Using code 204 to designate that there is no content to return
-    http_response_code(204);
+    // CHANGE TO 200 
+    // http_response_code(204);
 }
 
 /**
