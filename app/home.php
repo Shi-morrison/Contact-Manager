@@ -33,6 +33,7 @@
           </button>
         </div>
       </div>
+      <button id="show-contact" class="custom-btn btn-15 contact">Create Contact</button>
       <!-- Dropdown Menu -->
       <div class="toggle_btn">
         <i class="fa-solid fa-bars"></i>
@@ -112,7 +113,7 @@
       </div>
       <!-- End Edit Contact -->
 
-      <div class="transparent">
+      <!-- <div class="transparent">
         <div class="outline" style="justify-content: left; background: #72757e;">
           <div class="info">
             <img style="justify-content: center; margin-top: 10px;" class="profile-pic"
@@ -129,13 +130,14 @@
           <div class="spacing"></div>
           <div class="info">
             <button id="show-contact" class="custom-btn btn-15 contact">Create Contact</button>
-          </div>
-        </div>
-        <section class="contact-list">
-          <ul id="contactsDisplay">
 
-          </ul>
-        </section>
+          </div>
+        </div> -->
+      <section class="contact-list">
+        <ul id="contactsDisplay">
+
+        </ul>
+      </section>
       </div>
 
 
@@ -237,7 +239,7 @@
 
           const renderContact = (contact) => {
             return `
-                    <div class="contact">
+                    <div class="contact" >
                         <img style="justify-content: center; width: 30px;" class="profile-pic"
                            src="https://i.pinimg.com/originals/c9/f2/6d/c9f26d445db1d64bfc1bdccc40dbdf4c.jpg">
                         <h2>${contact.first_name} ${contact.last_name}</h2>

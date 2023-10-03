@@ -197,6 +197,7 @@ button:hover {
     margin-bottom: 10px;
     justify-content: space-between;
     margin-top: 5px;
+
 }
 
 .contact-list h2 {
@@ -930,4 +931,8 @@ video {
     background-color: #dc4545;
     color: white;
     cursor: pointer;
+}
+
+.contact-list {
+    background-color: rgb(168, 151, 151);
 }
