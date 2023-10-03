@@ -239,19 +239,21 @@
 
           const renderContact = (contact) => {
             return `
-                    <div class="contact" >
-                        <img style="justify-content: center; width: 30px;" class="profile-pic"
-                           src="https://i.pinimg.com/originals/c9/f2/6d/c9f26d445db1d64bfc1bdccc40dbdf4c.jpg">
-                        <h2>${contact.first_name} ${contact.last_name}</h2>
-                        <h3>${contact.phone}</h3>
-                        <h3>${contact.email}</h3>
-                        <div>
-                            <button class="custom-btn btn-15 contact edit-contact" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit Contact</button>
-                            <button class="custom-btn btn-15 contact" onclick="deleteContact(${contact.contact_id})">Delete Contact</button>
-                        </div>
+                <div class="contact">
+                    <img class="profile-pic"
+                      src="https://i.pinimg.com/originals/c9/f2/6d/c9f26d445db1d64bfc1bdccc40dbdf4c.jpg">
+                    <div class="contact-info">
+                        <h2>Name: ${contact.first_name} ${contact.last_name}</h2>
+                        <h3>Phone: ${contact.phone}</h3>
+                        <h3>Email: ${contact.email}</h3>
                     </div>
-                    <div class="spacing"></div>
-                `;
+                    <div class="contact-actions">
+                        <button class="custom-btn btn-15 contact" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit</button>
+                        <button class="custom-btn btn-15 contact" onclick="deleteContact(${contact.contact_id})">Delete</button>
+                    </div>
+                </div>
+            `;
+
           };
 
           if (data.contacts && Array.isArray(data.contacts)) {
