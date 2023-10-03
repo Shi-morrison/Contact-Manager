@@ -49,6 +49,20 @@
 
                 <button onclick="fetchContacts()">Fetch Contacts</button>
 
+                <div class="halloween">
+                    <div class="head">
+                        <div class="skull">
+                            <div class="eyes">
+                                <div class="eye eye-left"></div>
+                                <div class="eye eye-right"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body"></div>
+                    <div class="legs"></div>
+                </div>
+
+
                 <!-- Display contacts here -->
                 <div id="contactsDisplay">
                     Contacts here

@@ -5,9 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -33,6 +31,7 @@
           </button>
         </div>
       </div>
+      <button id="show-contact" class="custom-btn btn-15 contact">Create Contact</button>
       <!-- Dropdown Menu -->
       <div class="toggle_btn">
         <i class="fa-solid fa-bars"></i>
@@ -112,7 +111,7 @@
       </div>
       <!-- End Edit Contact -->
 
-      <div class="transparent">
+      <!-- <div class="transparent">
         <div class="outline" style="justify-content: left; background: #72757e;">
           <div class="info">
             <img style="justify-content: center; margin-top: 10px;" class="profile-pic"
@@ -129,26 +128,28 @@
           <div class="spacing"></div>
           <div class="info">
             <button id="show-contact" class="custom-btn btn-15 contact">Create Contact</button>
-          </div>
-        </div>
-        <section class="contact-list">
-          <ul id="contactsDisplay">
 
-          </ul>
-        </section>
+          </div>
+        </div> -->
+      <section class="contact-list">
+        <ul id="contactsDisplay">
+
+        </ul>
+      </section>
       </div>
 
 
     </section>
   </main>
   <script>
+    // DONT CHANGE !!
 
     // Add contact button
-    document.querySelector("#show-contact").addEventListener("click", function () {
+    document.querySelector("#show-contact").addEventListener("click", function() {
       document.querySelector(".popup2").classList.add("active");
 
     });
-    document.querySelector(".popup2 .close-btn").addEventListener("click", function () {
+    document.querySelector(".popup2 .close-btn").addEventListener("click", function() {
       document.querySelector(".popup2").classList.remove("active");
     });
 
@@ -161,12 +162,12 @@
       document.querySelector(".popup3 #editContactId").value = contactId;
       document.querySelector(".popup3").classList.add("active");
     }
-    document.querySelector(".popup3 .close-btn").addEventListener("click", function () {
+    document.querySelector(".popup3 .close-btn").addEventListener("click", function() {
       document.querySelector(".popup3").classList.remove("active");
     });
 
     // Add contact dropdown
-    document.querySelector("#show-contact-dropdown").addEventListener("click", function () {
+    document.querySelector("#show-contact-dropdown").addEventListener("click", function() {
       document.querySelector(".popup2").classList.add("active");
     });
 
@@ -175,7 +176,7 @@
     var toggleBtnIcon = document.querySelector(".toggle_btn i")
     var dropDownMenu = document.querySelector(".dropdown_menu")
 
-    toggleBtn.onclick = function () {
+    toggleBtn.onclick = function() {
       dropDownMenu.classList.toggle("open")
       const isOpen = dropDownMenu.classList.contains("open")
 
@@ -195,12 +196,12 @@
       };
 
       fetch('./LAMPAPI/Contact.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
         .then(response => response.json())
         .then(data => {
           // Close the modal
@@ -237,19 +238,21 @@
 
           const renderContact = (contact) => {
             return `
-                    <div class="contact">
-                        <img style="justify-content: center; width: 30px;" class="profile-pic"
-                           src="https://i.pinimg.com/originals/c9/f2/6d/c9f26d445db1d64bfc1bdccc40dbdf4c.jpg">
-                        <h2>${contact.first_name} ${contact.last_name}</h2>
-                        <h3>${contact.phone}</h3>
-                        <h3>${contact.email}</h3>
-                        <div>
-                            <button class="custom-btn btn-15 contact edit-contact" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit Contact</button>
-                            <button class="custom-btn btn-15 contact" onclick="deleteContact(${contact.contact_id})">Delete Contact</button>
-                        </div>
+                <div class="contact">
+                    <img class="profile-pic"
+                      src="https://i.pinimg.com/originals/c9/f2/6d/c9f26d445db1d64bfc1bdccc40dbdf4c.jpg">
+                    <div class="contact-info">
+                        <h2>Name: ${contact.first_name} ${contact.last_name}</h2>
+                        <h3>Phone: ${contact.phone}</h3>
+                        <h3>Email: ${contact.email}</h3>
                     </div>
-                    <div class="spacing"></div>
-                `;
+                    <div class="contact-actions">
+                        <button class="custom-btn btn-15 contact" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit</button>
+                        <button class="custom-btn btn-15 contact" onclick="deleteContact(${contact.contact_id})">Delete</button>
+                    </div>
+                </div>
+            `;
+
           };
 
           if (data.contacts && Array.isArray(data.contacts)) {
@@ -269,7 +272,7 @@
 
     // Edit Contact Function
     function submitEditForm() {
-      const contactId = document.getElementById("editContactId").value;  // Ensure you've added this hidden field to your "Edit Contact" form
+      const contactId = document.getElementById("editContactId").value; // Ensure you've added this hidden field to your "Edit Contact" form
       const data = {
         contact_id: contactId,
         first_name: document.querySelector(".popup3 #first_name").value,
@@ -279,12 +282,12 @@
       };
 
       fetch('./LAMPAPI/Contact.php', {
-        method: 'PUT',  // Changed to PUT
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
+          method: 'PUT', // Changed to PUT
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
         .then(response => response.json())
         .then(data => {
           // Close the modal
@@ -302,12 +305,12 @@
       };
 
       fetch('./LAMPAPI/Contact.php', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
         .then(response => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -324,7 +327,7 @@
         });
     }
 
-
+    // CHANGE AFTER THIS
   </script>
 
 </body>
