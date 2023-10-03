@@ -5,9 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -144,13 +142,14 @@
     </section>
   </main>
   <script>
+    // DONT CHANGE !!
 
     // Add contact button
-    document.querySelector("#show-contact").addEventListener("click", function () {
+    document.querySelector("#show-contact").addEventListener("click", function() {
       document.querySelector(".popup2").classList.add("active");
 
     });
-    document.querySelector(".popup2 .close-btn").addEventListener("click", function () {
+    document.querySelector(".popup2 .close-btn").addEventListener("click", function() {
       document.querySelector(".popup2").classList.remove("active");
     });
 
@@ -163,12 +162,12 @@
       document.querySelector(".popup3 #editContactId").value = contactId;
       document.querySelector(".popup3").classList.add("active");
     }
-    document.querySelector(".popup3 .close-btn").addEventListener("click", function () {
+    document.querySelector(".popup3 .close-btn").addEventListener("click", function() {
       document.querySelector(".popup3").classList.remove("active");
     });
 
     // Add contact dropdown
-    document.querySelector("#show-contact-dropdown").addEventListener("click", function () {
+    document.querySelector("#show-contact-dropdown").addEventListener("click", function() {
       document.querySelector(".popup2").classList.add("active");
     });
 
@@ -177,7 +176,7 @@
     var toggleBtnIcon = document.querySelector(".toggle_btn i")
     var dropDownMenu = document.querySelector(".dropdown_menu")
 
-    toggleBtn.onclick = function () {
+    toggleBtn.onclick = function() {
       dropDownMenu.classList.toggle("open")
       const isOpen = dropDownMenu.classList.contains("open")
 
@@ -197,12 +196,12 @@
       };
 
       fetch('./LAMPAPI/Contact.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
         .then(response => response.json())
         .then(data => {
           // Close the modal
@@ -273,7 +272,7 @@
 
     // Edit Contact Function
     function submitEditForm() {
-      const contactId = document.getElementById("editContactId").value;  // Ensure you've added this hidden field to your "Edit Contact" form
+      const contactId = document.getElementById("editContactId").value; // Ensure you've added this hidden field to your "Edit Contact" form
       const data = {
         contact_id: contactId,
         first_name: document.querySelector(".popup3 #first_name").value,
@@ -283,12 +282,12 @@
       };
 
       fetch('./LAMPAPI/Contact.php', {
-        method: 'PUT',  // Changed to PUT
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
+          method: 'PUT', // Changed to PUT
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
         .then(response => response.json())
         .then(data => {
           // Close the modal
@@ -306,12 +305,12 @@
       };
 
       fetch('./LAMPAPI/Contact.php', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
         .then(response => {
           if (!response.ok) {
             throw new Error("Network response was not ok");
@@ -328,7 +327,7 @@
         });
     }
 
-
+    // CHANGE AFTER THIS
   </script>
 
 </body>

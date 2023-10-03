@@ -986,19 +986,7 @@ video {
 }
 
 
-/* Spider */
-/* body {
-    margin: 0;
-    color: #444;
-    background: #ffff33;
-    font: 300 18px/18px Roboto, sans-serif;
-}
-
-*,
-:after,
-:before {
-    box-sizing: border-box
-} */
+/* Moving Skeleton*/
 
 .pull-left {
     float: left
@@ -1030,13 +1018,15 @@ video {
 }
 
 .halloween {
-    top: 50%;
-    left: 50%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 30px;
     height: 44px;
-    position: fixed;
-    margin-top: -22px;
-    margin-left: -15px;
+    position: absolute;
+    /* margin-top: -22px;
+    margin-left: -15px; */
     animation: move 3s infinite;
 }
 
