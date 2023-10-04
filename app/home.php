@@ -1,3 +1,10 @@
+<?php
+session_start(); // Ensure you start the session at the top of your PHP script
+$user_id = $_SESSION["user_id"];
+$username = $_SESSION["username"];
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,17 +17,15 @@
 </head>
 
 <body>
+  <input type="hidden" id="loggedInUserId" value="<?php echo $user_id; ?>">
+
   <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video>
   <!-- Start Navbar -->
   <header>
     <div class="navbar">
-      <!-- Test fetchContacts -->
+      <!-- Welcome User -->
       <div>
-        <label for="user_id">User ID:</label>
-        <input type="text" id="user_id" placeholder="Enter User ID">
-        <label for="contact_id">Contact ID (optional):</label>
-        <input type="text" id="contact_id" placeholder="Enter Contact ID or leave blank">
-        <button onclick="fetchContacts()">Fetch Contacts</button>
+        Welcome, <?php echo $_SESSION["username"]; ?>
       </div>
       <!-- Search bar -->
       <div class="wrap">
@@ -144,6 +149,10 @@
   <script>
     // DONT CHANGE !!
 
+    // Fetch contacts on page load
+    window.onload = fetchContacts;
+
+
     // Add contact button
     document.querySelector("#show-contact").addEventListener("click", function() {
       document.querySelector(".popup2").classList.add("active");
@@ -187,8 +196,9 @@
 
     // Add Contact Function
     function submitForm() {
+      const userId = document.getElementById("loggedInUserId").value; // Fetch user_id of logged-in user
       const data = {
-        user_id: 20,
+        user_id: userId,
         first_name: document.getElementById("first_name").value,
         last_name: document.getElementById("last_name").value,
         email: document.getElementById("email").value,
@@ -214,7 +224,7 @@
 
     // Get Contact(s) Function
     function fetchContacts() {
-      const userId = document.getElementById("user_id").value;
+      const userId = document.getElementById("loggedInUserId").value; // changed to retrieve from hidden input
       let contactId = document.getElementById("contact_id").value;
 
       // If contactId is empty, set it to 'null' as per your PHP logic
