@@ -23,14 +23,7 @@ $username = $_SESSION["username"];
   <!-- Start Navbar -->
   <header>
     <div class="navbar">
-      <!-- Test fetchContacts -->
-      <div>
-        <label for="user_id">User ID:</label>
-        <input type="text" id="user_id" placeholder="Enter User ID">
-        <label for="contact_id">Contact ID (optional):</label>
-        <input type="text" id="contact_id" placeholder="Enter Contact ID or leave blank">
-        <button onclick="fetchContacts()">Fetch Contacts</button>
-      </div>
+      <!-- Welcome User -->
       <div>
         Welcome, <?php echo $_SESSION["username"]; ?>
       </div>
