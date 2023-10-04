@@ -1,5 +1,8 @@
 <?php
 
+// Making sure that util functions are included
+require_once('utils/utils.php');
+
 // Setting global variable to use database connection for different operations
 global $conn;
 
