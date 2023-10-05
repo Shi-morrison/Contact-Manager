@@ -22,8 +22,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
-{
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Parsing JSON data from frontend
     $data = parseJsonData();
     $firstName = $data['firstName'];
@@ -50,17 +49,19 @@ function search($firstName, $lastName, $singularName, $onlyOneName)
     // Getting user_id from session to ensure that we only get contacts from this user
     $user_id = $_SESSION["user_id"];
 
-    // Checking if we should use AND or OR
+    // Append and prepend % for partial matching
+    $firstName = '%' . $firstName . '%';
+    $lastName = '%' . $lastName . '%';
+    $singularName = '%' . $singularName . '%';
+
     if ($onlyOneName) {
-        $sql = "SELECT * FROM contacts WHERE user_id = ? AND first_name LIKE ?
-                OR user_id = ? AND last_name LIKE ?";
+        $sql = "SELECT * FROM contacts WHERE user_id = ? AND (first_name LIKE ? OR last_name LIKE ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("isis", $user_id, $singularName, $user_id, $singularName);
+        $stmt->bind_param("iss", $user_id, $singularName, $singularName);
     } else {
-        $sql = "SELECT contact_id FROM contacts WHERE user_id = ? AND first_name LIKE ?
-                AND user_id = ? AND last_name LIKE ?";
+        $sql = "SELECT contact_id FROM contacts WHERE user_id = ? AND first_name LIKE ? AND last_name LIKE ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("isis", $user_id, $firstName, $user_id, $lastName);
+        $stmt->bind_param("iss", $user_id, $firstName, $lastName);
     }
 
     $stmt->execute();
@@ -68,13 +69,12 @@ function search($firstName, $lastName, $singularName, $onlyOneName)
 
     $searchCount = 0;
     $searchResults = array();
-    while($row = $result->fetch_assoc())
-    {
+    while ($row = $result->fetch_assoc()) {
         $searchCount++;
         array_push($searchResults, $row['contact_id']);
     }
 
-    if( $searchCount == 0 ) {
+    if ($searchCount == 0) {
         returnWithError("No Records Found", 400);
     }
 

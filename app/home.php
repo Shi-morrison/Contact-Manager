@@ -40,7 +40,7 @@ $username = $_SESSION["username"];
       <!-- Search bar -->
       <div class="wrap">
         <div class="search">
-          <input type="text" class="searchTerm" placeholder="Search for Contact" id="searchBar">
+          <input type="text" class="searchTerm" placeholder="Search for Contact" id="searchBar" oninput="liveSearch()">
           <button type="submit" class="searchButton" onClick="onSearch()">
             <i class="fa fa-search"></i>
           </button>
@@ -431,32 +431,37 @@ $username = $_SESSION["username"];
       }
     });
 
-    function onSearch(){
+
+
+    function liveSearch() {
       let searchBarText = document.getElementById("searchBar").value;
+      if (searchBarText.length >= 1) { // Optional: only search when at least 1 character is typed
+        onSearch();
+      } else {
+        // Optionally: clear the search results when the search bar is empty
+        fetchContacts();
+      }
+    }
+
+    function onSearch() {
+      let searchBarText = document.getElementById("searchBar").value.trim();
       let searchBarTextArr = searchBarText.split(" ");
 
-      // filters all empty strings out of the array
-      searchBarTextArr = searchBarTextArr.filter(function (element) {
-        return element != "";
-      });
+      // Object to hold user search data
+      const userObject = {
+        firstName: "",
+        lastName: "",
+        singularSearchName: "",
+        onlyOneName: false
+      };
 
-      let len = searchBarTextArr.length;
-
-      // object to hold user search data
-      // if there is only one input, set that to singularSearchName <- use this to query the database
-      // a bool is set in the object to check in the api code if the user only entered one name
-      const userObject = {firstName: "", lastName: "", singularSearchName: "", onlyOneName: false};
-
-      // if the user only enters one name, set the first and last name to the same value
-      if (len === 1){
-        userObject.singularSearchName = searchBarTextArr[0]
+      if (searchBarTextArr.length === 1) {
+        userObject.singularSearchName = searchBarTextArr[0];
         userObject.onlyOneName = true;
-      // if the user enters two names, set the first and last name to the respective values
-      }else if(len === 2){
-        userObject.firstName = searchBarTextArr[0]
-        userObject.lastName = searchBarTextArr[1]
-      }else{
-        // TODO: can change this to alert to something fancy? this is just for utility
+      } else if (searchBarTextArr.length === 2) {
+        userObject.firstName = searchBarTextArr[0];
+        userObject.lastName = searchBarTextArr[1];
+      } else {
         alert("Enter first and/or last name");
         return;
       }
@@ -468,15 +473,49 @@ $username = $_SESSION["username"];
           },
           body: JSON.stringify(userObject)
         })
-        .then(response => response.text())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+        })
         .then(data => {
-          // TODO: add appropriate code here?
-          console.log(data);
+          renderSearchResults(data.contact_id);
         })
         .catch(error => console.error('Error:', error));
     }
 
+    function renderSearchResults(contactIds) {
+      const apiUrl = `./LAMPAPI/Contact.php`;
+      const userId = document.getElementById("loggedInUserId").value;
+      const contactsDiv = document.getElementById("contactsDisplay");
+      contactsDiv.innerHTML = "";
 
+      const renderContact = (contact) => {
+        return `
+            <div class="contact-card">
+                <div class="contact-details">
+                    <h2 class="name">${contact.first_name} ${contact.last_name}</h2>
+                    <h3 class="phone">Phone: ${contact.phone}</h3>
+                    <h3 class="email">Email: ${contact.email}</h3>
+                </div>
+                <div class="contact-actions">
+                    <button class="custom-btn edit-btn" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit</button>
+                    <button class="custom-btn delete-btn" onclick="deleteContact(${contact.contact_id})">Delete</button>
+                </div>
+            </div>
+        `;
+      };
+
+      contactIds.forEach(contactId => {
+        fetch(`${apiUrl}?user_id=${userId}&contact_id=${contactId}`)
+          .then(response => response.json())
+          .then(contactData => {
+            contactsDiv.innerHTML += renderContact(contactData);
+          })
+          .catch(error => console.error('Error fetching contact:', error));
+      });
+    }
   </script>
 
 </body>
