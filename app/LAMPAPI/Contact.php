@@ -61,24 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     header('Content-Type: application/json');
     echo json_encode($contacts);
-
-
-    // // Parsing JSON data from frontend
-    // $data = parseJsonData();
-    // $user_id = $data['user_id'];
-    // $contact_id = $data['contact_id'];
-
-
-    // if ($contact_id == "null") {
-    //     // Attempting to read all contacts of user with user_id
-    //     $contacts = getAllContacts($user_id);
-    // } else {
-    //     // Attempting to read a specific contact with contact_id
-    //     $contacts = getContact($user_id, $contact_id);
-    // }
-
-    // header('Content-Type: application/json');
-    // echo json_encode($contacts);
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 
     // Parsing JSON data from frontend
@@ -105,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     deleteContact($contact_id);
     // Had to Add to ensure json response
     echo json_encode(["status" => "success", "message" => "Contact deleted successfully"]);
-
 } else {
 
     // Handling for any other request, will not perform any database operations
@@ -136,13 +117,13 @@ function addContact($user_id, $firstName, $lastName, $email, $phone)
     }
 
     // Returning response code 201 to indicate a successful creation
-    http_response_code(201);
+    http_response_code(200);
 
     // Getting contact_id of this contact to return to frontend
     $lastInsertId = $conn->insert_id;
     $conn->close();
 
-    return array('contact_id' => $lastInsertId);
+    return array('success' => true);
 }
 
 // Function to get a specific contact when given a user_id and contact_id

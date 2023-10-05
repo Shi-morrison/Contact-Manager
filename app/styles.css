@@ -6,19 +6,241 @@
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400|Ubuntu:400');
 
+@font-face {
+    font-family: "stranger";
+    src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/455279/stranger.ttf") format("truetype");
+}
+
 html {
+    background: linear-gradient(0deg, #050514, #30336b);
+    overflow: hidden;
+    height: 100%;
+}
+
+html body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.patch {
+    position: absolute;
+    bottom: 0;
+    height: 10vh;
+    width: 3vw;
+    background-color: black;
+    z-index: 2;
+}
+
+.patch:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 0;
+}
+
+.bottompatch {
+    position: absolute;
+    background-color: red;
+    bottom: 0;
+    left: 0;
+}
+
+.gravestones .cross {
+    position: absolute;
+    height: 28vh;
+    width: 1.8vh;
+    background-color: black;
+    bottom: 0;
+    z-index: 1;
+}
+
+.gravestones .cross:after {
+    content: "";
+    position: absolute;
+    background-color: inherit;
+    height: 1.8vh;
+    width: 10vh;
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.gravestones .cross:nth-child(1) {
+    left: 20%;
+}
+
+.gravestones .cross:nth-child(2) {
+    left: 70%;
+    bottom: -4vh;
+}
+
+.gravestones .cross:nth-child(3) {
+    left: 90%;
+}
+
+.msg {
+    display: none;
+    color: black;
+    font-size: 6.2vh;
+    font-family: "stranger", arial;
+    position: absolute;
+    bottom: 14vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.crypt {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 38vh;
+    height: 40vh;
+}
+
+.crypt .roof {
+    height: 10vh;
+    width: 100%;
+    background-color: black;
+    -webkit-clip-path: polygon(21% 0%, 79% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(21% 0%, 79% 14%, 100% 100%, 0% 100%);
+}
+
+.crypt .body {
+    width: 86%;
+    height: 100%;
+    background-color: black;
+    margin: -1vh auto 0 auto;
+}
+
+.crypt .body .door {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) rotateZ(-3deg);
+    width: 20%;
+    height: 45%;
+    border-top-right-radius: 100%;
+    border-top-left-radius: 100%;
+    background-color: black;
+}
+
+.fog {
+    width: 40vh;
+    height: 20vh;
+    border-top-right-radius: 100%;
+    border-top-left-radius: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    animation-name: fog;
+    animation-iteration-count: infinite;
+    animation-duration: 80s;
+}
+
+.moon {
+    position: absolute;
+    top: 8vh;
+    right: 18vh;
+    height: 20vh;
+    width: 20vh;
+    border-radius: 20vh;
+    box-shadow: inset -2vh 0 0 #dfe6e9;
+    transform: rotateZ(32deg);
+}
+
+.title {
+    height: 65vh;
+    margin: 0;
+    position: absolute;
+    left: 49%;
+    bottom: -90vh;
+    opacity: 0.1;
+    transition: filter 3s;
+    transform: translate(-50%, -50%) rotateZ(-4deg);
+    font-family: "stranger", arial;
+    font-size: 60vh;
+    color: #dfe6e9;
+    z-index: -10;
+}
+
+.life {
+    opacity: 1;
+    /* set final opacity state */
+    transition: opacity 4s;
+    animation-name: float, fadeOut;
+    animation-iteration-count: 1, 1;
+    /* both animations play once */
+    animation-duration: 5s, 4s;
+    animation-delay: 0s, 5s;
+    animation-fill-mode: forwards;
+    /* ensures the animation's end state remains */
+}
+
+.star {
+    height: 1px;
+    width: 1px;
+    background-color: white;
+    position: absolute;
+    z-index: 0;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fog {
+    0% {
+        filter: blur(10vh);
+        left: -9vw;
+        transform: rotateZ(19deg);
+    }
+
+    50% {
+        filter: blur(13vh);
+        left: 109vw;
+    }
+
+    100% {
+        filter: blur(10vh);
+        left: 9vw;
+        transform: rotateZ(-19deg);
+    }
+}
+
+@keyframes float {
+    0% {
+        top: 45%;
+    }
+
+    50% {
+        top: 46%;
+    }
+
+    100% {
+        top: 45%;
+    }
+}
+
+/* html {
     font-size: 100%;
 }
 
 /*16px*/
 
-body {
+/* body {
     background: white;
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     line-height: 1.75;
     color: #000000;
-}
+}  */
 
 p {
     margin-bottom: 1rem;
@@ -61,108 +283,6 @@ small,
     font-size: 0.8rem;
 }
 
-.login-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.login-box {
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: auto;
-    padding: 20px;
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-}
-
-.login-box h2 {
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.input-box {
-    margin-bottom: 15px;
-    text-align: left;
-    resize: both;
-}
-
-.input-box label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    resize: both;
-}
-
-.input-box input {
-    width: 90%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-bottom: 5px;
-    resize: both;
-}
-
-.submit-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.register-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.welcome {
-    position: fixed;
-    top: 0;
-    left: 3;
-    justify-content: top;
-}
-
-.outline {
-    border-right: 2px solid black;
-    max-width: 15%;
-    display: inline-flexbox;
-    align-items: center;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-.profile-pic {
-    clip-path: circle();
-    max-width: 80%;
-    height: auto;
-    width: auto\9;
-}
-
-.spacing {
-    height: 1px;
-    background-color: #000;
-}
-
-.info {
-    margin-top: 3px;
-    text-align: center;
-}
 
 .background-image {
     background: url(https://png.pngtree.com/background/20210711/original/pngtree-scary-graveyard-in-the-woods---halloween-background-picture-image_1154763.jpg) no-repeat center center fixed;
@@ -186,13 +306,13 @@ button:hover {
     justify-content: space-between;
 }
 
-.contact-list {
+/* .contact-list {
     flex: 1;
     padding: 20px;
-}
+} */
 
 /* CONTACTS STYLING */
-.contact {
+/* .contact {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
@@ -217,6 +337,65 @@ button:hover {
 .contact h2,
 .contact h3 {
     margin: 5px 0;
+} */
+
+
+.contact-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #222;
+    border-radius: 5px;
+    border: 2px dashed #444;
+    /* Dashed line gives a spooky feel */
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+    background-color: #311;
+    /* Darker color on hover */
+}
+
+.contact-details h2,
+.contact-details h3 {
+    margin: 5px 0;
+    color: #f5f5f5;
+}
+
+.name {
+    font-size: 1.2em;
+    color: #ff4500;
+    /* Halloween orange */
+}
+
+.phone,
+.email {
+    font-size: 1em;
+}
+
+.custom-btn {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px;
+    background-color: #f5f5f5;
+    color: #222;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-btn:hover {
+    background-color: #88aa44;
+    /* Random green shade on hover for edit */
+    color: #fff;
+}
+
+.delete-btn:hover {
+    background-color: #ff4500;
+    /* Halloween orange on hover for delete */
+    color: #fff;
 }
 
 .custom-btn {
@@ -267,11 +446,12 @@ button:hover {
 /* Navbar */
 li {
     list-style: none;
+
 }
 
 a {
     text-decoration: none;
-    color: white;
+    /* color: white; */
     font-size: 1rem;
     display: flex;
     text-align: center;
@@ -298,6 +478,18 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    /* background-color: red */
+    flex-wrap: wrap;
+}
+
+.icon-btn {
+    margin-left: auto;
+    /* Aligns the button to the right */
+}
+
+.container,
+.wrap {
+    flex: 1;
 }
 
 .navbar .logo a {
@@ -318,6 +510,247 @@ header {
     display: none;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Search Bar */
+.search {
+    width: 100%;
+    position: relative;
+    display: flex;
+
+
+}
+
+.searchTerm {
+    width: 100%;
+    border: 3px solid #4c2424;
+    border-right: none;
+    padding: 5px;
+
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: black;
+}
+
+.searchTerm:focus {
+    color: black;
+}
+
+.searchButton {
+    width: 40px;
+    height: 36px;
+    border: 1px solid #4c2424;
+    background: #4c2424;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/* Add contact button */
+.main-hr {
+    width: 30%;
+    border: none;
+    border-top: 1px solid #c3c3c3;
+}
+
+.icon-btn {
+    width: 47px;
+    height: 35px;
+    border: 1px solid #cdcdcd;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+    transition: width 0.2s ease-in-out;
+    margin-left: auto;
+    /* Aligns the button to the right */
+}
+
+.add-btn:hover {
+    width: 120px;
+}
+
+.add-btn::before,
+.add-btn::after {
+    transition: width 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+    content: "";
+    position: absolute;
+    height: 4px;
+    width: 10px;
+    top: calc(50% - 2px);
+    background: #4c2424;
+}
+
+.add-btn::after {
+    right: 14px;
+    overflow: hidden;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.add-btn::before {
+    left: 14px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.icon-btn:focus {
+    outline: none;
+}
+
+.btn-txt {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.add-btn:hover::before,
+.add-btn:hover::after {
+    width: 4px;
+    border-radius: 2px;
+}
+
+.add-btn:hover .btn-txt {
+    opacity: 1;
+}
+
+.add-icon::after,
+.add-icon::before {
+    transition: all 0.2s ease-in-out;
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 2px;
+    top: calc(50% - 10px);
+    background: #4c2424;
+    overflow: hidden;
+}
+
+.add-icon::before {
+    left: 22px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.add-icon::after {
+    right: 22px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.add-btn:hover .add-icon::before {
+    left: 15px;
+    height: 4px;
+    top: calc(50% - 2px);
+}
+
+.add-btn:hover .add-icon::after {
+    right: 15px;
+    height: 4px;
+    top: calc(50% - 2px);
+}
+
+.fa {
+    font-size: 1.5em;
+}
+
+@media (max-width: 768px) {
+    .fa {
+        font-size: 1em;
+    }
+}
+
+/* Logout */
+.logout-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2c2c2c;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.4);
+    width: 300px;
+    text-align: center;
+}
+
+.logout-modal h3 {
+    color: #ff6666;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.logout-modal p {
+    color: #f1f1f1;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.logout-modal .confirm-btn,
+.logout-modal .cancel-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.logout-modal .confirm-btn {
+    background-color: #ff6666;
+    color: #f1f1f1;
+}
+
+.logout-modal .cancel-btn {
+    background-color: #4a4a4a;
+    color: #e1e1e1;
+}
+
+.logout-modal .confirm-btn:hover {
+    background-color: #ff3333;
+}
+
+.logout-modal .cancel-btn:hover {
+    background-color: #595959;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+    }
+
+    .container,
+    .wrap,
+    .icon-btn {
+        width: 100%;
+        margin-bottom: 1rem;
+        /* Adds some space between elements */
+    }
+
+    .search {
+        width: 100%;
+    }
+}
+
+/* IDK WHT THIS IS */
 .action_btn {
     background-color: purple;
     color: yellow;
@@ -415,14 +848,11 @@ header {
 
 }
 
+
+
+
 /* HERO SECTION */
-section#hero {
-    display: flex;
-    /* flex-direction: column; */
-    /* align-items: center; */
-    /* justify-content: center; */
-    height: calc(100vh - 60px);
-}
+
 
 /* Backround Video */
 video {
@@ -441,6 +871,28 @@ video {
 /* Log in / Register Pop Up  */
 
 /* Log in Form */
+.switch-form {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.switch-form a {
+    background-color: #4CAF50;
+    /* Change this to your preferred color */
+    padding: 10px 15px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.switch-form a:hover {
+    background-color: #45a049;
+    /* Darker shade of the original color */
+}
+
 .center {
     position: absolute;
     top: 50%;
@@ -462,23 +914,29 @@ video {
 }
 
 .popup {
-    position: absolute;
-    top: -150%;
+    position: fixed;
+    /* changed from absolute to fixed for better positioning */
+    top: 50%;
     left: 50%;
     opacity: 0;
     transform: translate(-50%, -50%) scale(1.25);
-    width: 380px;
+    backdrop-filter: blur(1px);
+    width: 80%;
+    /* changed from 380px to 80% for better scaling on smaller screens */
+    max-width: 380px;
     padding: 20px 30px;
-    background: #fff;
-    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
+    background: transparent;
+    /* Adjusted for transparency */
+    /* box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15); */
     border-radius: 10px;
+    border: white solid 2px;
     transition: top 0ms ease-in-out 200ms,
         opacity 200ms ease-in-out 0ms,
         transform 200ms ease-in-out 0ms;
 }
 
 .popup.active {
-    top: 50%;
+    /* top: 50%; */
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
     transition: top 0ms ease-in-out 0ms,
@@ -486,23 +944,11 @@ video {
         transform 200ms ease-in-out 0ms;
 }
 
-.popup .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 15px;
-    height: 15px;
-    background: #888;
-    color: #eee;
-    text-align: center;
-    line-height: 15px;
-    border-radius: 15px;
-    cursor: pointer;
-}
+
 
 .popup .form h2 {
     text-align: center;
-    color: #222;
+    color: white;
     margin: 10px 0px 20px;
     font-size: 25px;
 }
@@ -513,23 +959,30 @@ video {
 
 .popup .form .form-element label {
     font-size: 14px;
-    color: #222;
+    color: white;
 }
 
 .popup .form .form-element input[type="text"],
-.popup .form .form-element input[type="password"] {
+.popup .form .form-element input[type="password"],
+.popup .form .form-element input[type="text"]:focus,
+.popup .form .form-element input[type="password"]:focus {
     margin-top: 5px;
     display: block;
     width: 100%;
     padding: 10px;
     outline: none;
-    border: 1px solid #aaa;
-    border-radius: 5px;
+    border: none;
+    /* Remove standard border */
+    border-bottom: 1px solid white;
+    /* Add a bottom border only */
+    border-radius: 0;
+    /* Remove rounded corners for a cleaner look */
+    background: transparent;
+    /* Transparent background */
+    color: white;
+    /* Set text color to white for visibility */
 }
 
-.popup .form .form-element input[type="checkbox"] {
-    margin-right: 5px;
-}
 
 .popup .form .form-element button {
     width: 100%;
@@ -537,10 +990,16 @@ video {
     border: none;
     outline: none;
     font-size: 16px;
-    background: #222;
+    background: blue;
     color: #f5f5f5;
     border-radius: 10px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.popup .form .form-element button:hover {
+    background-color: darkblue;
+
 }
 
 .popup .form .form-element a {
@@ -552,26 +1011,48 @@ video {
     font-weight: 600;
 }
 
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .popup {
+        padding: 15px 20px;
+        /* reduced padding for smaller screens */
+    }
+
+    .popup .form .form-element {
+        margin: 10px 0px;
+        /* reduced margin for smaller screens */
+    }
+}
+
+.switch-form {
+    color: white;
+}
+
 
 /* Register Form */
 .popup1 {
-    position: absolute;
-    top: -150%;
+    position: fixed;
+    top: 50%;
     left: 50%;
     opacity: 0;
     transform: translate(-50%, -50%) scale(1.25);
-    width: 380px;
+    backdrop-filter: blur(1px);
+    width: 80%;
+    /* changed from 380px to 80% for better scaling on smaller screens */
+    max-width: 380px;
     padding: 20px 30px;
-    background: #fff;
-    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
+    background: transparent;
+    /* Adjusted for transparency */
+    /* box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15); */
     border-radius: 10px;
+    border: white solid 2px;
     transition: top 0ms ease-in-out 200ms,
         opacity 200ms ease-in-out 0ms,
         transform 200ms ease-in-out 0ms;
 }
 
 .popup1.active {
-    top: 50%;
+    /* top: 50%; */
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
     transition: top 0ms ease-in-out 0ms,
@@ -579,23 +1060,11 @@ video {
         transform 200ms ease-in-out 0ms;
 }
 
-.popup1 .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 15px;
-    height: 15px;
-    background: #888;
-    color: #eee;
-    text-align: center;
-    line-height: 15px;
-    border-radius: 15px;
-    cursor: pointer;
-}
+
 
 .popup1 .form h2 {
     text-align: center;
-    color: #222;
+    color: white;
     margin: 10px 0px 20px;
     font-size: 25px;
 }
@@ -606,23 +1075,30 @@ video {
 
 .popup1 .form .form-element label {
     font-size: 14px;
-    color: #222;
+    color: white;
 }
 
 .popup1 .form .form-element input[type="text"],
-.popup1 .form .form-element input[type="password"] {
+.popup1 .form .form-element input[type="password"],
+.popup1 .form .form-element input[type="text"]:focus,
+.popup1 .form .form-element input[type="password"]:focus {
     margin-top: 5px;
     display: block;
     width: 100%;
     padding: 10px;
     outline: none;
-    border: 1px solid #aaa;
-    border-radius: 5px;
+    border: none;
+    /* Remove standard border */
+    border-bottom: 1px solid white;
+    /* Add a bottom border only */
+    border-radius: 0;
+    /* Remove rounded corners for a cleaner look */
+    background: transparent;
+    /* Transparent background */
+    color: white;
+    /* Set text color to white for visibility */
 }
 
-.popup1 .form .form-element input[type="checkbox"] {
-    margin-right: 5px;
-}
 
 .popup1 .form .form-element button {
     width: 100%;
@@ -630,10 +1106,16 @@ video {
     border: none;
     outline: none;
     font-size: 16px;
-    background: #222;
+    background: blue;
     color: #f5f5f5;
     border-radius: 10px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.popup1 .form .form-element button:hover {
+    background-color: darkblue;
+
 }
 
 .popup1 .form .form-element a {
@@ -645,15 +1127,34 @@ video {
     font-weight: 600;
 }
 
+@media (max-width: 768px) {
+    .popup1 {
+        padding: 15px 20px;
+        /* reduced padding for smaller screens */
+    }
+
+    .popup1 .form .form-element {
+        margin: 10px 0px;
+        /* reduced margin for smaller screens */
+    }
+}
+
+.switch-form {
+    color: white;
+}
+
 
 /* Add Contact Form */
 .popup2 {
-    position: absolute;
+    position: fixed;
     top: -150%;
     left: 50%;
     opacity: 0;
     transform: translate(-50%, -50%) scale(1.25);
-    width: 380px;
+    width: 80%;
+    /* changed from 380px to 80% for better scaling on smaller screens */
+    max-width: 380px;
+    /* added max-width to retain your original design on larger screens */
     padding: 20px 30px;
     background: #fff;
     box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
@@ -740,14 +1241,30 @@ video {
     font-weight: 600;
 }
 
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .popup2 {
+        padding: 15px 20px;
+        /* reduced padding for smaller screens */
+    }
+
+    .popup2 .form .form-element {
+        margin: 10px 0px;
+        /* reduced margin for smaller screens */
+    }
+}
+
 /* Edit Contact Form */
 .popup3 {
-    position: absolute;
+    position: fixed;
+    /* changed from absolute to fixed for better positioning */
     top: -150%;
     left: 50%;
     opacity: 0;
     transform: translate(-50%, -50%) scale(1.25);
-    width: 380px;
+    width: 80%;
+    /* changed from 380px to 80% for better scaling on smaller screens */
+    max-width: 380px;
     padding: 20px 30px;
     background: #fff;
     box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
@@ -757,6 +1274,7 @@ video {
         transform 200ms ease-in-out 0ms;
 
     z-index: 1000;
+    overflow-y: auto;
 }
 
 .popup3.active {
@@ -834,6 +1352,18 @@ video {
     font-weight: 600;
 }
 
+@media (max-width: 768px) {
+    .popup3 {
+        padding: 15px 20px;
+        /* reduced padding for smaller screens */
+    }
+
+    .popup3 .form .form-element {
+        margin: 10px 0px;
+        /* reduced margin for smaller screens */
+    }
+}
+
 
 /* button effects */
 .frame {
@@ -902,40 +1432,6 @@ video {
     top: 2px;
 }
 
-/* Search Bar */
-.search {
-    width: 100%;
-    position: relative;
-    display: flex;
-
-}
-
-.searchTerm {
-    width: 100%;
-    border: 3px solid red;
-    border-right: none;
-    padding: 5px;
-
-    border-radius: 5px 0 0 5px;
-    outline: none;
-    color: black;
-}
-
-.searchTerm:focus {
-    color: black;
-}
-
-.searchButton {
-    width: 40px;
-    height: 36px;
-    border: 1px solid red;
-    background: red;
-    text-align: center;
-    color: #fff;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    font-size: 20px;
-}
 
 
 /*Resize the wrap to see the search bar change!*/
@@ -980,10 +1476,10 @@ video {
     cursor: pointer;
 }
 
-.contact-list {
+/* .contact-list {
 
     backdrop-filter: blur(3px);
-}
+} */
 
 .error {
     color: red;
@@ -991,6 +1487,53 @@ video {
     margin-top: 5px;
 }
 
+
+.contact-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* This will create a responsive grid of cards */
+    gap: 20px;
+    /* Spacing between each grid item (contact-card) */
+    padding: 20px;
+    max-width: 1200px;
+    /* To limit the maximum width */
+    margin: 0 auto;
+    /* To center the entire grid on wider screens */
+}
+
+.contact-card {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s;
+
+    /* Halloween touch: make the card slightly lift on hover */
+    &:hover {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.contact {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.contact {
+    padding: 15px;
+    border: 2px solid #444;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.2);
+    /* Slightly transparent background. */
+}
 
 
 
@@ -1261,4 +1804,98 @@ video {
     100% {
         right: 1px;
     }
+}
+
+/* Button for username */
+.userNameDisplay {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+
+.userNameDisplay:hover {
+    background-color: #555;
+}
+
+.social-container {
+    position: relative;
+    display: inline-block;
+    width: 164px;
+    height: 36px;
+    perspective: 300px;
+    font-size: 24px;
+    margin: 8px;
+}
+
+.social-container .social-cube {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: all 0.333s;
+    transform: translateZ(-18px);
+}
+
+.social-container .social-cube .front,
+.social-container .social-cube .back,
+.social-container:hover .social-cube .front {
+    background: var(--color, #000);
+}
+
+.social-container .social-cube .bottom {
+    background: var(--dark-color, #000);
+}
+
+.social-container:hover .social-cube .bottom {
+    background: var(--color, #000);
+}
+
+.social-container .social-cube .front,
+.social-container .social-cube .bottom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    transition: background 0.333s;
+}
+
+.social-container .social-cube .front {
+    transform: rotateX(0deg) translateZ(18px);
+}
+
+.social-container .social-cube .bottom {
+    transform: rotateX(-90deg) translateZ(18px);
+}
+
+.social-container:hover .social-cube {
+    transform: translateZ(-18px) rotateX(90deg);
+}
+
+.social-container.twitter .social-cube .front,
+.social-container.twitter .social-cube .back,
+.social-container.twitter:hover .social-cube .front {
+    background: #4c2424;
+}
+
+.social-container.twitter .social-cube .bottom {
+    background: #4c2424;
+}
+
+.social-container.twitter:hover .social-cube .bottom {
+    background: #4c2424;
 }
