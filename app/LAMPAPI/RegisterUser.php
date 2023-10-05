@@ -51,6 +51,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  */
 function register($username, $newPassword, $confirmPassword)
 {
+
+    // Ensuring that username is not empty string
+    if (!is_string($username) || (trim($username) === "")) {
+        $error = "Please provide a valid username";
+        returnWithError($error, 400);
+    }
+
+    // Ensuring that password is not empty string
+    if (!is_string($newPassword) || (trim($newPassword) === "")) {
+        $error = "Please provide a valid password";
+        returnWithError($error, 400);
+    }
+
     // Only allowing for one user per username
     if (userExists($username))
     {
