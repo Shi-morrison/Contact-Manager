@@ -7,70 +7,338 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
-    <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video>
+    <!-- <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video> -->
     <header>
-        <div class="navbar">
-            <div> <a class="custom-btn btn-15" href="index.php">Home</a></div>
-            <ul class="links">
-                <li><button id="show-register" class="custom-btn btn-15">Sign Up</button></li>
-                <li><button id="show-login" class="custom-btn btn-15">Log In</button></li>
-            </ul>
-            <div class="toggle_btn">
-                <i class="fa-solid fa-bars"></i>
-            </div>
-        </div>
-        <div class="dropdown_menu">
-            <li><button id="show-register" class="custom-btn btn-15">Sign Up</button></li>
-            <li><button id="show-login" class="custom-btn btn-15">Log In</button></li>
 
-        </div>
     </header>
 
     <main>
         <section id="hero">
+
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='star'></div>
+            <div class='title'>PhantonPhonebook</div>
+            <div class='gravestones'>
+                <div class='cross'></div>
+                <div class='cross'></div>
+                <div class='cross'></div>
+            </div>
+            <div class='bottompatch'>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+                <div class='patch'></div>
+            </div>
+            <div class='msg'>
+                Dare to enter?
+            </div>
+            <div class='crypt'>
+                <div class='roof'></div>
+                <div class='body'>
+                    <div class='door'></div>
+                </div>
+            </div>
+            <div class='fog'></div>
+            <div class='moon'></div>
+
+
+
             <!-- Log in Form -->
             <div class="center">
             </div>
-            <div class="popup">
-                <div class="close-btn">&times;</div>
+            <div class="popup active">
+
                 <form class="form" id="loginForm">
                     <h2>Log in</h2>
                     <div class="form-element">
                         <label for="username">Username</label>
-                        <input type="text" id="logInusername" placeholder="Enter username">
+                        <input type="text" id="logInusername" placeholder="Enter username" autocomplete="off">
                     </div>
                     <div class="form-element">
                         <label for="password">Password</label>
-                        <input type="password" id="logInpassword" placeholder="Enter password">
+                        <input type="password" id="logInpassword" placeholder="Enter password" autocomplete="off">
                     </div>
                     <div id="loginError" class="error"></div>
                     <div class="form-element">
                         <button type="submit">Sign in</button>
                     </div>
+                    <div class="switch-form">
+                        Don't have an account? <br> <a href="#" id="showRegisterForm">Register now</a>
+                    </div>
+
                 </form>
             </div>
 
             <!-- Register Form -->
             <div class="center">
             </div>
-            <div class="popup1">
-                <div class="close-btn">&times;</div>
+            <div class="popup1 active">
+
                 <form class="form" id="registrationForm">
                     <h2>Register</h2>
                     <div class="form-element">
                         <label for="username">Username</label>
-                        <input type="text" id="username" placeholder="Enter username">
+                        <input type="text" id="username" placeholder="Enter username" autocomplete="off">
                     </div>
                     <div class="form-element">
                         <label for="password">Password</label>
-                        <input type="password" id="password" placeholder="Enter password">
+                        <input type="password" id="password" placeholder="Enter password" autocomplete="off">
                     </div>
                     <div id="registerError" class="error"></div>
                     <div class="form-element">
                         <button type="submit">Sign Up</button>
+                    </div>
+                    <div class="switch-form">
+                        Already have an account? <a href="#" id="showLoginForm">Log in</a>
                     </div>
 
                 </form>
@@ -80,37 +348,69 @@
 
 
     <script>
-        document.querySelector("#show-login").addEventListener("click", function() {
-            if (!document.querySelector(".popup1").classList.contains("active")) {
-                document.querySelector(".popup").classList.add("active");
-            }
-        });
-        document.querySelector(".popup .close-btn").addEventListener("click", function() {
-            document.querySelector(".popup").classList.remove("active");
-        });
+        $(".patch").each((i) => {
+            let b = i + 1
+            let rX = Math.floor(Math.random() * 50)
+            let rY = Math.floor(Math.random() * 100)
+            let rH = Math.floor(Math.random() * 10) + 15
+            $(".patch:nth-child(" + b + ")").css({
+                left: i - 1 + "vw",
+                height: rH + "vh",
+                "-webkit-clip-path": "polygon(" + rX + "% " + rX + "%, 0% 100%, 100% 100%)",
+                "clip-path": "polygon(" + rX + "% " + rX + "%, 0% 100%, 100% 100%)"
+            })
+        })
 
-        document.querySelector("#show-register").addEventListener("click", function() {
-            if (!document.querySelector(".popup").classList.contains("active")) {
-                document.querySelector(".popup1").classList.add("active");
-            }
-            document.querySelector(".popup1").classList.add("active");
-        });
-        document.querySelector(".popup1 .close-btn").addEventListener("click", function() {
-            document.querySelector(".popup1").classList.remove("active");
-        });
+        $(".cross").each((i) => {
+            let b = i + 1
+            let rR = Math.floor(Math.random() * 15) * Math.cos(Math.PI * Math.round(Math.random()))
+            $(".cross:nth-child(" + b + ")").css({
+                "transform": "rotateZ(" + rR + "deg)"
+            })
+        })
 
-        var toggleBtn = document.querySelector(".toggle_btn")
-        var toggleBtnIcon = document.querySelector(".toggle_btn i")
-        var dropDownMenu = document.querySelector(".dropdown_menu")
+        $(".star").each((i) => {
+            $(".star:nth-child(" + i + ")").css({
+                top: Math.random() * $(document).height() - $(document).height() / 4,
+                left: Math.random() * $(document).width()
+            })
+        })
 
-        toggleBtn.onclick = function() {
-            dropDownMenu.classList.toggle("open")
-            const isOpen = dropDownMenu.classList.contains("open")
-
-            toggleBtnIcon.classList = isOpen ?
-                'fa-solid fa-xmark' :
-                'fa-solid fa-bars'
+        init = () => {
+            $(".crypt").css({
+                "transform": "translateX(-50%) rotateZ(" + Math.floor(Math.random() * 5) * Math.cos(Math.PI * Math.round(Math.random())) + "deg)"
+            })
+            $(".title").animate({
+                top: "45%"
+            }, 5000, () => {
+                $(".title").addClass("life")
+                $(".msg").fadeIn(1000)
+            })
         }
+
+        init()
+        document.addEventListener("DOMContentLoaded", function() {
+            const loginForm = document.querySelector(".popup");
+            const registerForm = document.querySelector(".popup1");
+
+            // Show the login form by default on page load
+            loginForm.style.display = "block";
+            registerForm.style.display = "none";
+
+            document.getElementById("showRegisterForm").addEventListener("click", function(e) {
+                e.preventDefault();
+                loginForm.style.display = "none";
+                registerForm.style.display = "block";
+            });
+
+            document.getElementById("showLoginForm").addEventListener("click", function(e) {
+                e.preventDefault();
+                registerForm.style.display = "none";
+                loginForm.style.display = "block";
+            });
+        });
+
+
 
         document.querySelector("#registrationForm").addEventListener("submit", function(event) {
             event.preventDefault();

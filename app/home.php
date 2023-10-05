@@ -4,7 +4,6 @@ $user_id = $_SESSION["user_id"];
 $username = $_SESSION["username"];
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,14 +18,25 @@ $username = $_SESSION["username"];
 <body>
   <input type="hidden" id="loggedInUserId" value="<?php echo $user_id; ?>">
 
-  <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video>
+  <!-- <video autoplay loop muted src="./assets/backround.mov" type="video/mov"></video> -->
   <!-- Start Navbar -->
   <header>
     <div class="navbar">
       <!-- Welcome User -->
-      <div>
-        Welcome, <?php echo $_SESSION["username"]; ?>
+
+      <div class="container">
+        <a href="#" class="social-container twitter userNameDisplay">
+          <div class="social-cube">
+            <div class="front">
+              Hello, <?php echo $_SESSION["username"]; ?>
+            </div>
+            <div class="bottom">
+              Log Out
+            </div>
+          </div>
+        </a>
       </div>
+
       <!-- Search bar -->
       <div class="wrap">
         <div class="search">
@@ -36,47 +46,66 @@ $username = $_SESSION["username"];
           </button>
         </div>
       </div>
-      <button id="show-contact" class="custom-btn btn-15 contact">Create Contact</button>
-      <!-- Dropdown Menu -->
-      <div class="toggle_btn">
-        <i class="fa-solid fa-bars"></i>
+
+      <div class="">
+        <button class="icon-btn add-btn " id="show-contact">
+          <div class="add-icon"></div>
+          <div class="btn-txt">Add Contact</div>
+        </button>
       </div>
+      <!-- <button id="show-contact" class="custom-btn btn-15 contact">Create Contact</button> -->
+      <!-- Dropdown Menu -->
+
     </div>
-    <div class="dropdown_menu">
-      <li>
-        <button id="show-contact-dropdown" class="custom-btn btn-15 contact">Create Contact</button>
-      </li>
-    </div>
+
   </header>
   <!-- End Navbar -->
 
   <!-- Start hero section -->
   <main>
     <section id="hero">
+
+
+      <div class='gravestones'>
+        <div class='cross'></div>
+        <div class='cross'></div>
+        <div class='cross'></div>
+      </div>
+
+      <div class='crypt'>
+        <div class='roof'></div>
+        <div class='body'>
+          <div class='door'></div>
+        </div>
+      </div>
+      <div class='fog'></div>
+
+
       <!-- Add contact -->
       <div class="center">
       </div>
       <div class="popup2">
         <div class="close-btn">&times;</div>
-        <form class="form" onsubmit="event.preventDefault(); submitForm();">
+        <form class="form" id="addContactForm" onsubmit="event.preventDefault(); submitForm();">
           <h2>Add Contact</h2>
           <div class="form-element">
             <label for="first_name">First Name</label>
-            <input type="text" id="first_name" placeholder="First Name">
+            <input type="text" id="first_name" placeholder="First Name" autocomplete="off">
 
           </div>
           <div class="form-element">
             <label for="last_name">Last Name</label>
-            <input type="text" id="last_name" placeholder="Last Name">
+            <input type="text" id="last_name" placeholder="Last Name" autocomplete="off">
           </div>
           <div class="form-element">
             <label for="email">Email</label>
-            <input type="text" id="email" placeholder="Email">
+            <input type="text" id="email" placeholder="Email" autocomplete="off">
           </div>
           <div class="form-element">
             <label for="phone">Phone Number</label>
-            <input type="text" id="phone" placeholder="Phone">
+            <input type="text" id="phone" placeholder="Phone" autocomplete="off">
           </div>
+          <div id="contactError" class="error"></div>
           <div class="form-element">
             <button type="submit" value="Submit">Create Contact</button>
           </div>
@@ -115,38 +144,52 @@ $username = $_SESSION["username"];
         </form>
       </div>
       <!-- End Edit Contact -->
-
-      <!-- <div class="transparent">
-        <div class="outline" style="justify-content: left; background: #72757e;">
-          <div class="info">
-            <img style="justify-content: center; margin-top: 10px;" class="profile-pic"
-              src="https://i.pinimg.com/originals/c9/f2/6d/c9f26d445db1d64bfc1bdccc40dbdf4c.jpg">
-          </div>
-          <div class="spacing"></div>
-          <div class="info">
-            <h3 style="color: #fffffe;">User</h3>
-          </div>
-          <div class="spacing"></div>
-          <div class="info">
-            <h3 style="color: #fffffe;">000-000-0000</h3>
-          </div>
-          <div class="spacing"></div>
-          <div class="info">
-            <button id="show-contact" class="custom-btn btn-15 contact">Create Contact</button>
-
-          </div>
-        </div> -->
       <section class="contact-list">
-        <ul id="contactsDisplay">
+        <div id="contactsDisplay">
 
-        </ul>
+        </div>
+
       </section>
+      <div id="logoutPopup" class="logout-modal">
+        <h3>Abandon the Haunted Mansion?</h3>
+        <p>Are you sure you want to log out?</p>
+        <button id="confirmLogout" class="confirm-btn">Yes</button>
+        <button id="cancelLogout" class="cancel-btn">No</button>
       </div>
+
 
 
     </section>
   </main>
   <script>
+    // Log out button and Logic
+    document.querySelector('.userNameDisplay').addEventListener('click', function() {
+      document.getElementById('logoutPopup').style.display = 'block';
+    });
+
+    document.getElementById('cancelLogout').addEventListener('click', function() {
+      document.getElementById('logoutPopup').style.display = 'none';
+    });
+
+    document.getElementById('confirmLogout').addEventListener('click', function() {
+      // Log out using AJAX and then redirect
+      fetch('./LAMPAPI/LogoutUser.php', {
+          method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.msg === "Logout was successful") {
+            window.location.href = 'index.php';
+          } else {
+            // Handle the logout error
+            alert(data.msg);
+          }
+        })
+        .catch(error => {
+          console.error('Error logging out:', error);
+        });
+    });
+
     // DONT CHANGE !!
 
     // Fetch contacts on page load
@@ -214,18 +257,45 @@ $username = $_SESSION["username"];
         })
         .then(response => response.json())
         .then(data => {
-          // Close the modal
-          document.querySelector(".popup2").classList.remove("active");
-          // Refresh the contacts list to reflect changes
-          fetchContacts();
-          console.log(data);
+          console.log(data); // let's log the data to see what's returned
+          if (data.success) {
+            document.getElementById("addContactForm").reset();
+            // Close the modal
+            document.querySelector(".popup2").classList.remove("active");
+            // Maybe refresh the contacts list or other actions post successful addition
+            fetchContacts();
+          } else if (data.error) {
+            // Display the error message at the bottom of the form
+            displayError('contact', data.error);
+          } else {
+            // A general error for the form
+            displayError('contact', 'Failed to add contact. Please try again.');
+          }
+        })
+        .catch(error => {
+          console.error('Error during the contact addition process:', error);
+          displayError('contact', 'Failed to add contact due to a network issue. Please try again.');
         });
     }
+
+    function displayError(formType, errorMessage) {
+      let errorDiv;
+
+      if (formType === 'contact') {
+        errorDiv = document.getElementById('contactError');
+      }
+
+      if (errorDiv) {
+        errorDiv.textContent = errorMessage;
+      }
+    }
+
+
 
     // Get Contact(s) Function
     function fetchContacts() {
       const userId = document.getElementById("loggedInUserId").value; // changed to retrieve from hidden input
-      let contactId = document.getElementById("contact_id").value;
+      let contactId = ""; // Initialize contactId to empty string
 
       // If contactId is empty, set it to 'null' as per your PHP logic
       if (!contactId) {
@@ -248,18 +318,16 @@ $username = $_SESSION["username"];
 
           const renderContact = (contact) => {
             return `
-                <div class="contact">
-                    <img class="profile-pic"
-                      src="https://i.pinimg.com/originals/c9/f2/6d/c9f26d445db1d64bfc1bdccc40dbdf4c.jpg">
-                    <div class="contact-info">
-                        <h2>Name: ${contact.first_name} ${contact.last_name}</h2>
-                        <h3>Phone: ${contact.phone}</h3>
-                        <h3>Email: ${contact.email}</h3>
-                    </div>
-                    <div class="contact-actions">
-                        <button class="custom-btn btn-15 contact" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit</button>
-                        <button class="custom-btn btn-15 contact" onclick="deleteContact(${contact.contact_id})">Delete</button>
-                    </div>
+                <div class="contact-card">
+                  <div class="contact-details">
+                      <h2 class="name">${contact.first_name} ${contact.last_name}</h2>
+                      <h3 class="phone">Phone: ${contact.phone}</h3>
+                      <h3 class="email">Email: ${contact.email}</h3>
+                  </div>
+                  <div class="contact-actions">
+                      <button class="custom-btn edit-btn" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit</button>
+                      <button class="custom-btn delete-btn" onclick="deleteContact(${contact.contact_id})">Delete</button>
+                  </div>
                 </div>
             `;
 
@@ -337,8 +405,12 @@ $username = $_SESSION["username"];
         });
     }
 
+
+
+
     // CHANGE AFTER THIS
   </script>
+
 
 </body>
 
