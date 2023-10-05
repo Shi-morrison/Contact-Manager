@@ -65,7 +65,20 @@ $username = $_SESSION["username"];
   <main>
     <section id="hero">
 
+      <!-- Where contacts are displayed -->
+      <section class="contact-list">
+        <div id="contactsDisplay">
+        </div>
+      </section>
 
+      <!-- Pagination Controls -->
+      <div id="paginationControls">
+        <button id="prevPageBtn" onclick="prevPage()">Previous</button>
+        <span id="pageInfo">Page <span id="currentPage">1</span> of <span id="totalPages">?</span></span>
+        <button id="nextPageBtn" onclick="nextPage()">Next</button>
+      </div>
+
+      <!-- Backround Art -->
       <div class='gravestones'>
         <div class='cross'></div>
         <div class='cross'></div>
@@ -144,12 +157,8 @@ $username = $_SESSION["username"];
         </form>
       </div>
       <!-- End Edit Contact -->
-      <section class="contact-list">
-        <div id="contactsDisplay">
 
-        </div>
-
-      </section>
+      <!-- Logout Popup -->
       <div id="logoutPopup" class="logout-modal">
         <h3>Abandon the Haunted Mansion?</h3>
         <p>Are you sure you want to log out?</p>
@@ -193,7 +202,10 @@ $username = $_SESSION["username"];
     // DONT CHANGE !!
 
     // Fetch contacts on page load
-    window.onload = fetchContacts;
+    window.onload = function() {
+      fetchContacts(1); // Calling fetchContacts with a specific page number
+    };
+
 
 
     // Add contact button
@@ -218,24 +230,6 @@ $username = $_SESSION["username"];
       document.querySelector(".popup3").classList.remove("active");
     });
 
-    // Add contact dropdown
-    document.querySelector("#show-contact-dropdown").addEventListener("click", function() {
-      document.querySelector(".popup2").classList.add("active");
-    });
-
-    // Responsive dropdown menu
-    var toggleBtn = document.querySelector(".toggle_btn")
-    var toggleBtnIcon = document.querySelector(".toggle_btn i")
-    var dropDownMenu = document.querySelector(".dropdown_menu")
-
-    toggleBtn.onclick = function() {
-      dropDownMenu.classList.toggle("open")
-      const isOpen = dropDownMenu.classList.contains("open")
-
-      toggleBtnIcon.classList = isOpen ?
-        'fa-solid fa-xmark' :
-        'fa-solid fa-bars'
-    }
 
     // Add Contact Function
     function submitForm() {
@@ -293,17 +287,9 @@ $username = $_SESSION["username"];
 
 
     // Get Contact(s) Function
-    function fetchContacts() {
-      const userId = document.getElementById("loggedInUserId").value; // changed to retrieve from hidden input
-      let contactId = ""; // Initialize contactId to empty string
-
-      // If contactId is empty, set it to 'null' as per your PHP logic
-      if (!contactId) {
-        contactId = "null";
-      }
-
-      // Constructing the URL with query parameters
-      const apiUrl = `./LAMPAPI/Contact.php?user_id=${userId}&contact_id=${contactId}`;
+    function fetchContacts(page = 1, itemsPerPage = 9) {
+      const userId = document.getElementById("loggedInUserId").value;
+      const apiUrl = `./LAMPAPI/Contact.php?user_id=${userId}&page=${page}&items_per_page=${itemsPerPage}`;
 
       fetch(apiUrl)
         .then(response => {
@@ -318,18 +304,18 @@ $username = $_SESSION["username"];
 
           const renderContact = (contact) => {
             return `
-                <div class="contact-card">
-                  <div class="contact-details">
-                      <h2 class="name">${contact.first_name} ${contact.last_name}</h2>
-                      <h3 class="phone">Phone: ${contact.phone}</h3>
-                      <h3 class="email">Email: ${contact.email}</h3>
-                  </div>
-                  <div class="contact-actions">
-                      <button class="custom-btn edit-btn" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit</button>
-                      <button class="custom-btn delete-btn" onclick="deleteContact(${contact.contact_id})">Delete</button>
-                  </div>
-                </div>
-            `;
+                    <div class="contact-card">
+                      <div class="contact-details">
+                          <h2 class="name">${contact.first_name} ${contact.last_name}</h2>
+                          <h3 class="phone">Phone: ${contact.phone}</h3>
+                          <h3 class="email">Email: ${contact.email}</h3>
+                      </div>
+                      <div class="contact-actions">
+                          <button class="custom-btn edit-btn" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit</button>
+                          <button class="custom-btn delete-btn" onclick="deleteContact(${contact.contact_id})">Delete</button>
+                      </div>
+                    </div>
+                `;
 
           };
 
@@ -342,11 +328,33 @@ $username = $_SESSION["username"];
           } else {
             contactsDiv.innerHTML = "No contacts found.";
           }
+
+          // Update pagination info
+          document.getElementById("currentPage").textContent = page;
+          // Assume total pages is 10 for now
+          document.getElementById("totalPages").textContent = 10;
+
         })
         .catch(error => {
           console.error("There was a problem with the fetch operation:", error.message);
         });
     }
+
+    function prevPage() {
+      const currentPage = parseInt(document.getElementById("currentPage").textContent);
+      if (currentPage > 1) {
+        fetchContacts(currentPage - 1);
+      }
+    }
+
+    function nextPage() {
+      const currentPage = parseInt(document.getElementById("currentPage").textContent);
+      const totalPages = parseInt(document.getElementById("totalPages").textContent);
+      if (currentPage < totalPages) {
+        fetchContacts(currentPage + 1);
+      }
+    }
+
 
     // Edit Contact Function
     function submitEditForm() {

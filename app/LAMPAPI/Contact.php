@@ -45,17 +45,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     header('Content-Type: application/json');
     echo json_encode($newContactID);
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
-    // Retrieve query parameters
+} else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : null;
     $contact_id = isset($_GET['contact_id']) ? $_GET['contact_id'] : null;
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;  // Get the page query parameter and cast to integer
+    $itemsPerPage = isset($_GET['items_per_page']) ? (int)$_GET['items_per_page'] : 10;  // Get the items_per_page query parameter and cast to integer
 
     if (is_null($contact_id) || $contact_id == "null") {
-        // Attempting to read all contacts of user with user_id
-        $contacts = getAllContacts($user_id);
+        $contacts = getAllContacts($user_id, $page, $itemsPerPage);  // Pass the page and itemsPerPage arguments
     } else {
-        // Attempting to read a specific contact with contact_id
         $contacts = getContact($user_id, $contact_id);
     }
 
@@ -154,32 +152,35 @@ function getContact($user_id, $contact_id)
     return $row;
 }
 
-
-// Function to get all contacts for a user with user_id
-function getAllContacts($user_id)
+// Updated function to get all contacts for a user with user_id and only 10 contacts per page
+function getAllContacts($user_id, $page = 1, $itemsPerPage = 10)
 {
     global $conn;
 
-    // Using SQL query to get contacts outlined in database schema
-    $sql = "SELECT * FROM contacts WHERE user_id = ?";
+    $offset = max(0, ($page - 1) * $itemsPerPage);  // Ensure offset is zero or positive
 
+    // Adjust the SQL query to include LIMIT and OFFSET clauses
+    $sql = "SELECT * FROM contacts WHERE user_id = ? LIMIT $itemsPerPage OFFSET $offset";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
+
+    // Bind the parameters as integers
     $stmt->execute();
 
     $result = $stmt->get_result();
     $stmt->close();
     $conn->close();
 
-    // Iterate through rows and add contacts information to an array
     $contacts = array();
     while ($row = $result->fetch_assoc()) {
         $contacts[] = $row;
     }
 
-    // Return array with all contacts for user_id
     return array('contacts' => $contacts);
 }
+
+
+
 
 // This function calls the helper edit functions to edit subfields of the contact
 function editContact($contact_id, $newFirstName, $newLastName, $newEmail, $newPhone)
