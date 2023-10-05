@@ -40,8 +40,8 @@ $username = $_SESSION["username"];
       <!-- Search bar -->
       <div class="wrap">
         <div class="search">
-          <input type="text" class="searchTerm" placeholder="Search for Contact">
-          <button type="submit" class="searchButton">
+          <input type="text" class="searchTerm" placeholder="Search for Contact" id="searchBar">
+          <button type="submit" class="searchButton" onClick="onSearch()">
             <i class="fa fa-search"></i>
           </button>
         </div>
@@ -409,8 +409,67 @@ $username = $_SESSION["username"];
 
 
     // CHANGE AFTER THIS
-  </script>
 
+    // search bar object
+    // use anywhere in document will be hoisted
+    const searchBar = document.getElementById("searchBar");
+
+    // event listener on search text box for enter key
+    searchBar.addEventListener("keyup", function(event) {
+      // event.KeyCode === 13 is the enter key
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        onSearch();
+      }
+    });
+
+    function onSearch(){
+      let searchBarText = document.getElementById("searchBar").value;
+      let searchBarTextArr = searchBarText.split(" ");
+
+      // filters all empty strings out of the array
+      searchBarTextArr = searchBarTextArr.filter(function (element) {
+        return element != "";
+      });
+
+      let len = searchBarTextArr.length;
+
+      // object to hold user search data
+      // if there is only one input, set that to singularSearchName <- use this to query the database
+      // a bool is set in the object to check in the api code if the user only entered one name
+      const userObject = {firstName: "", lastName: "", singularSearchName: "", onlyOneName: false};
+
+      // if the user only enters one name, set the first and last name to the same value
+      if (len === 1){
+        userObject.singularSearchName = searchBarTextArr[0]
+        userObject.onlyOneName = true;
+      // if the user enters two names, set the first and last name to the respective values
+      }else if(len === 2){
+        userObject.firstName = searchBarTextArr[0]
+        userObject.lastName = searchBarTextArr[1]
+      }else{
+        // TODO: can change this to alert to something fancy? this is just for utility
+        alert("Enter first and/or last name");
+        return;
+      }
+
+      fetch('./LAMPAPI/Search.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(userObject)
+        })
+        .then(response => response.text())
+        .then(data => {
+          // TODO: add appropriate code here?
+          console.log(data);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+
+  </script>
 
 </body>
 
