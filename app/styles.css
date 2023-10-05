@@ -49,7 +49,7 @@ html body {
     width: 1.8vh;
     background-color: black;
     bottom: 0;
-    z-index: 1;
+    z-index: -10;
 }
 
 .gravestones .cross:after {
@@ -95,6 +95,7 @@ html body {
     transform: translateX(-50%);
     width: 38vh;
     height: 40vh;
+    z-index: -1;
 }
 
 .crypt .roof {
@@ -132,7 +133,7 @@ html body {
     background-color: rgba(255, 255, 255, 0.2);
     position: absolute;
     bottom: 0;
-    z-index: 1;
+    z-index: -1;
     animation-name: fog;
     animation-iteration-count: infinite;
     animation-duration: 80s;
@@ -306,40 +307,8 @@ small,
     justify-content: space-between;
 }
 
-/* .contact-list {
-    flex: 1;
-    padding: 20px;
-} */
 
 /* CONTACTS STYLING */
-/* .contact {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.profile-pic {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: 15px;
-    object-fit: cover;
-}
-
-.contact-info {
-    flex-grow: 2;
-}
-
-.contact h2,
-.contact h3 {
-    margin: 5px 0;
-} */
-
-
 .contact-card {
     display: flex;
     justify-content: space-between;
@@ -351,11 +320,46 @@ small,
     border: 2px dashed #444;
     /* Dashed line gives a spooky feel */
     transition: all 0.3s ease;
+    width: 250px;
+}
+
+#contactsDisplay {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* creates two columns */
+    grid-auto-rows: minmax(100px, auto);
+    /* adjusts row height based on content, with a minimum height of 100px */
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .contact-card:hover {
     background-color: #311;
     /* Darker color on hover */
+}
+
+.contact-card {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s;
+
+    /* Halloween touch: make the card slightly lift on hover */
+    &:hover {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .contact-details h2,
@@ -374,6 +378,27 @@ small,
 .email {
     font-size: 1em;
 }
+
+.contact-list h2 {
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.contact-list h3 {
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Contact display design */
+
+
+.contact-list,
+#hero {
+    overflow: auto;
+
+}
+
+
 
 .custom-btn {
     padding: 5px 15px;
@@ -421,26 +446,54 @@ small,
     filter: brightness(0.9);
 }
 
-.contact-list h2 {
-    font-size: 20px;
-    font-family: 'Montserrat', sans-serif;
+/* Pagination Controls Container */
+#paginationControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+    /* Vertical margin 10px, horizontal margin auto for centering */
+    padding: 5px;
+    border-radius: 10px;
+    max-width: 80%;
+    /* Set a maximum width */
 }
 
-.contact-list h3 {
-    font-size: 15px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.contact-button {
-    background-color: #7f5af0;
-    /* Set the desired color */
+/* Pagination Buttons */
+#prevPageBtn,
+#nextPageBtn {
+    background-color: #311;
+    /* Color you provided for buttons */
     color: #fff;
-    /* Text color */
+    /* White text */
     padding: 10px 20px;
-    /* Adjust padding as needed */
-    border: 1px solid black;
+    border: none;
+    cursor: pointer;
+    margin: 0 10px;
     border-radius: 5px;
-    font-size: 15px;
+    transition: background-color 0.3s ease-in-out;
+    /* Smooth color transition on hover */
+}
+
+/* Hover effect for buttons */
+#prevPageBtn:hover,
+#nextPageBtn:hover {
+    background-color: #ff7518;
+    /* Pumpkin orange background on hover */
+}
+
+/* Page Indicator */
+#pageInfo {
+    color: #fff;
+    /* White text */
+    font-weight: bold;
+    /* Bold text for emphasis */
+}
+
+/* Span elements within pageInfo */
+#pageInfo span {
+    color: #fff;
+    /* White text */
 }
 
 /* Navbar */
@@ -537,7 +590,7 @@ header {
 
 .searchTerm {
     width: 100%;
-    border: 3px solid #4c2424;
+    border: 3px solid #311;
     border-right: none;
     padding: 5px;
 
@@ -553,8 +606,8 @@ header {
 .searchButton {
     width: 40px;
     height: 36px;
-    border: 1px solid #4c2424;
-    background: #4c2424;
+    border: 1px solid #311;
+    background: #311;
     text-align: center;
     color: #fff;
     border-radius: 0 5px 5px 0;
@@ -594,7 +647,7 @@ header {
     height: 4px;
     width: 10px;
     top: calc(50% - 2px);
-    background: #4c2424;
+    background: #311;
 }
 
 .add-btn::after {
@@ -748,104 +801,6 @@ header {
     .search {
         width: 100%;
     }
-}
-
-/* IDK WHT THIS IS */
-.action_btn {
-    background-color: purple;
-    color: yellow;
-    padding: 0.5rem 1rem;
-    border: none;
-    outline: none;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    -ms-border-radius: 20px;
-    -o-border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: scale 0.2 ease;
-    -webkit-transition: scale 0.2 ease;
-    -moz-transition: scale 0.2 ease;
-    -ms-transition: scale 0.2 ease;
-    -o-transition: scale 0.2 ease;
-}
-
-.action_btn:hover {
-    scale: 1.05;
-    color: pink;
-}
-
-.action_btn:active {
-    scale: 0.95;
-}
-
-/* DROPDOWN MENU */
-.dropdown_menu {
-    display: none;
-    position: absolute;
-    right: 2rem;
-    top: 60px;
-    /*hidesnavbar*/
-    height: 0;
-    width: 150px;
-    background: rgb(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
-    overflow: hidden;
-    transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    -webkit-transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    -moz-transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    -ms-transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    -o-transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.dropdown_menu.open {
-    height: 120px;
-}
-
-.dropdown_menu li {
-    padding: 0.7rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.dropdown_menu .action_btn {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-
-/* RESPONSIVE DESIGN */
-@media(max-width: 992px) {
-
-    .navbar .links,
-    .navbar .action_btn {
-        display: none;
-    }
-
-    .navbar .toggle_btn {
-        display: block;
-    }
-
-    .dropdown_menu {
-        display: block;
-    }
-}
-
-@media(max-width: 576px) {
-    .dropdown_menu {
-        left: 2rem;
-        width: unset;
-    }
-
 }
 
 
@@ -1440,88 +1395,12 @@ video {
     flex-direction: row;
 }
 
-.view {
-    display: flex;
-    flex-direction: column;
-}
-
-#contact {
-    width: 80%;
-    margin: 10px auto;
-    border: 1px solid rgb(168, 151, 151);
-    border-radius: 5px;
-    padding: 10px;
-    box-sizing: border-box;
-    position: relative;
-}
-
-#nameDisplay {
-    font-weight: bolder;
-}
-
-#delete {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    padding: 5px;
-    background: none;
-    border: 1px solid #dc4545;
-    color: #dc4545;
-    border-radius: 5px;
-}
-
-#delete:hover {
-    background-color: #dc4545;
-    color: white;
-    cursor: pointer;
-}
-
-/* .contact-list {
-
-    backdrop-filter: blur(3px);
-} */
-
 .error {
     color: red;
     font-size: 12px;
     margin-top: 5px;
 }
 
-
-.contact-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    /* This will create a responsive grid of cards */
-    gap: 20px;
-    /* Spacing between each grid item (contact-card) */
-    padding: 20px;
-    max-width: 1200px;
-    /* To limit the maximum width */
-    margin: 0 auto;
-    /* To center the entire grid on wider screens */
-}
-
-.contact-card {
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.3s;
-
-    /* Halloween touch: make the card slightly lift on hover */
-    &:hover {
-        transform: translateY(-10px);
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
 
 .contact {
     animation: fadeIn 0.5s ease-out;
@@ -1536,275 +1415,6 @@ video {
 }
 
 
-
-
-/* Moving Skeleton*/
-
-.pull-left {
-    float: left
-}
-
-.pull-right {
-    float: right
-}
-
-.clearfix:after,
-.clearfix:before {
-    content: '';
-    display: table
-}
-
-.clearfix:after {
-    clear: both;
-    display: block
-}
-
-.halloween .head .skull:before,
-.halloween .head .skull:after,
-.halloween .eyes .eye:before,
-.halloween .body:before,
-.halloween .body:after,
-.halloween .legs:before {
-    content: '';
-    position: absolute;
-}
-
-.halloween {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 30px;
-    height: 44px;
-    position: absolute;
-    /* margin-top: -22px;
-    margin-left: -15px; */
-    animation: move 3s infinite;
-}
-
-.halloween .head {
-    z-index: 1;
-    width: 25px;
-    height: 25px;
-    background: #444;
-    border-radius: 50%;
-    position: relative;
-}
-
-.halloween .head .skull {
-    left: 2px;
-    bottom: 2px;
-    width: 16px;
-    height: 16px;
-    color: #f9f9f9;
-    border-radius: 50%;
-    background: #f9f9f9;
-    position: absolute;
-    animation: skull 3s infinite;
-}
-
-.halloween .head .skull:before {
-    top: 9px;
-    width: 0;
-    left: 50%;
-    height: 0;
-    z-index: 1;
-    margin-left: -2px;
-    border: 2px solid transparent;
-    border-bottom: 2px solid #444;
-}
-
-.halloween .head .skull:after {
-    top: 14px;
-    left: 50%;
-    width: 1px;
-    height: 4px;
-    margin-left: -1px;
-    background: #f9f9f9;
-    box-shadow: 2px 0, -2px 0, 4px 0, -4px 0,
-        -3px -2px, -1px -2px, 1px -2px, 3px -2px
-}
-
-.halloween .eyes {
-    width: inherit;
-    height: inherit;
-    overflow: hidden;
-    border-radius: 50%;
-    position: relative;
-}
-
-.halloween .eyes .eye {
-    top: 5px;
-    width: 5px;
-    height: 5px;
-    position: absolute;
-    border-radius: 50%;
-    background: #f8cd22;
-    border: 1px solid #444;
-    border-right: 2px solid #444;
-}
-
-.halloween .eyes .eye:before {
-    top: -1px;
-    left: -1px;
-    width: 5px;
-    height: 3px;
-    background: #f9f9f9;
-    border-radius: 5px 5px 0 0;
-    animation: eyes 3s infinite;
-}
-
-.halloween .eyes .eye.eye-left {
-    left: 1px;
-}
-
-.halloween .eyes .eye.eye-right {
-    right: 1px;
-}
-
-.halloween .body {
-    top: -3px;
-    width: 24px;
-    height: 17px;
-    background: #444;
-    position: relative;
-    border-radius: 10px 10px 2px 2px;
-}
-
-.halloween .body:before,
-.halloween .body:after {
-    top: 3px;
-    width: 4px;
-    height: 12px;
-    background: #444;
-}
-
-.halloween .body:before {
-    left: -1px;
-    border-radius: 100% 0 0 2px;
-    transform: rotate(10deg);
-    animation: hand-left 3s infinite;
-}
-
-.halloween .body:after {
-    right: -1px;
-    border-radius: 0 100% 2px 0;
-    transform: rotate(-10deg);
-    animation: hand-right 3s infinite;
-}
-
-.halloween .legs {
-    top: -3px;
-    left: 50%;
-    width: 21px;
-    height: 10px;
-    overflow: hidden;
-    margin-left: -13px;
-    position: relative;
-    border-bottom: 1px solid rgba(0, 0, 0, .2);
-}
-
-.halloween .legs:before {
-    top: 0;
-    left: -7px;
-    width: 60px;
-    height: 10px;
-    background-image: linear-gradient(-495deg, #444 4px, transparent 0), linear-gradient(-45deg, transparent 4px, #444 0);
-    background-size: 4px 8px;
-    background-repeat: repeat-x;
-    animation: legs 3s infinite;
-}
-
-@keyframes move {
-    0% {
-        transform: translateX(0)
-    }
-
-    50% {
-        transform: translateX(15px)
-    }
-
-    100% {
-        transform: translateX(0)
-    }
-}
-
-@keyframes skull {
-    0% {
-        transform: translate(0, 0)
-    }
-
-    25% {
-        transform: translate(2px, 1px)
-    }
-
-    75% {
-        transform: translate(3px, -1px)
-    }
-
-    100% {
-        transform: translate(0, 0)
-    }
-}
-
-@keyframes eyes {
-    0% {
-        top: -5px;
-        border-radius: 50%;
-    }
-
-    50% {
-        top: -1px;
-        border-radius: 5px 5px 0 0;
-    }
-
-    100% {
-        top: -5px;
-        border-radius: 50%;
-    }
-}
-
-@keyframes legs {
-    0% {
-        left: -7px;
-    }
-
-    50% {
-        left: -25px;
-    }
-
-    100% {
-        left: -7px;
-    }
-}
-
-@keyframes hand-left {
-    0% {
-        left: 1px;
-    }
-
-    50% {
-        left: -2px;
-    }
-
-    100% {
-        left: 1px;
-    }
-}
-
-@keyframes hand-right {
-    0% {
-        right: 1px;
-    }
-
-    50% {
-        right: -2px;
-    }
-
-    100% {
-        right: 1px;
-    }
-}
 
 /* Button for username */
 .userNameDisplay {
@@ -1825,6 +1435,7 @@ video {
     background-color: #555;
 }
 
+/* Log out button design */
 .social-container {
     position: relative;
     display: inline-block;
@@ -1889,13 +1500,13 @@ video {
 .social-container.twitter .social-cube .front,
 .social-container.twitter .social-cube .back,
 .social-container.twitter:hover .social-cube .front {
-    background: #4c2424;
+    background: #311;
 }
 
 .social-container.twitter .social-cube .bottom {
-    background: #4c2424;
+    background: #311;
 }
 
 .social-container.twitter:hover .social-cube .bottom {
-    background: #4c2424;
+    background: #311;
 }
