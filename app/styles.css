@@ -930,8 +930,8 @@ header {
     font-size: 18px;
 }
 
-.delete-modal .confirm-btn,
-.delete-modal .cancel-btn {
+.delete-modal .confirm-btn1,
+.delete-modal .cancel-btn1 {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
@@ -940,21 +940,21 @@ header {
     transition: background-color 0.3s;
 }
 
-.delete-modal .confirm-btn {
+.delete-modal .confirm-btn1 {
     background-color: #ff6666;
     color: #f1f1f1;
 }
 
-.delete-modal .cancel-btn {
+.delete-modal .cancel-btn1 {
     background-color: #4a4a4a;
     color: #e1e1e1;
 }
 
-.delete-modal .confirm-btn:hover {
+.delete-modal .confirm-btn1:hover {
     background-color: #ff3333;
 }
 
-.delete-modal .cancel-btn:hover {
+.delete-modal .cancel-btn1:hover {
     background-color: #595959;
 }
 
