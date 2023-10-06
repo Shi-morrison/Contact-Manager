@@ -1,7 +1,7 @@
 <?php
 session_start(); // Ensure you start the session at the top of your PHP script
-$user_id = $_SESSION["user_id"];
-$username = $_SESSION["username"];
+$user_id = $_SESSION['user_id'];
+$username = $_SESSION['username'];
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +28,7 @@ $username = $_SESSION["username"];
         <a href="#" class="social-container twitter userNameDisplay">
           <div class="social-cube">
             <div class="front">
-              Hello, <?php echo $_SESSION["username"]; ?>
+              Hello, <?php echo $_SESSION['username']; ?>
             </div>
             <div class="bottom">
               Log Out
@@ -236,11 +236,10 @@ $username = $_SESSION["username"];
       document.querySelector(".popup3").classList.remove("active");
     });
 
-
     // Add Contact Function
     function submitForm() {
       const userId = document.getElementById("loggedInUserId").value; // Fetch user_id of logged-in user
-      const data = {
+      let data = {
         user_id: userId,
         first_name: document.getElementById("first_name").value,
         last_name: document.getElementById("last_name").value,
@@ -248,6 +247,7 @@ $username = $_SESSION["username"];
         phone: document.getElementById("phone").value
       };
 
+      
       fetch('./LAMPAPI/Contact.php', {
           method: 'POST',
           headers: {
