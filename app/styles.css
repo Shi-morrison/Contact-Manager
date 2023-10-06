@@ -298,6 +298,11 @@ small,
 
 /* CONTACTS STYLING */
 .contact-card {
+    min-height: 100px;
+    /* Adjust as needed */
+    max-height: 200px;
+    /* Adjust as needed */
+    height: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -308,7 +313,12 @@ small,
     border: 2px dashed #444;
     /* Dashed line gives a spooky feel */
     transition: all 0.3s ease;
-    width: 250px;
+    width: auto;
+}
+
+.contact-details h2.name,
+.contact-details h3.email {
+    white-space: normal;
 }
 
 #contactsDisplay {
@@ -985,7 +995,7 @@ video {
 }
 
 .switch-form a {
-    background-color: #4CAF50;
+    background-color: #1E5959;
     /* Change this to your preferred color */
     padding: 10px 15px;
     color: #fff;
@@ -997,7 +1007,7 @@ video {
 }
 
 .switch-form a:hover {
-    background-color: #45a049;
+    background-color: #113333;
     /* Darker shade of the original color */
 }
 
@@ -1023,24 +1033,31 @@ video {
 
 .popup {
     position: fixed;
-    /* changed from absolute to fixed for better positioning */
+    /*changedfromabsolutetofixedforbetterpositioning*/
     top: 50%;
     left: 50%;
     opacity: 0;
     transform: translate(-50%, -50%) scale(1.25);
-    backdrop-filter: blur(1px);
+
     width: 80%;
-    /* changed from 380px to 80% for better scaling on smaller screens */
+    /*changedfrom380pxto80%forbetterscalingonsmallerscreens*/
     max-width: 380px;
     padding: 20px 30px;
-    background: transparent;
-    /* Adjusted for transparency */
-    /* box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15); */
+    background: rgba(0, 0, 0, 0.7);
+    /* Make background slightly transparent */
+    backdrop-filter: blur(10px);
+    /* Increase blur value to make it more blurry */
+
+    /*Adjustedfortransparency*/
+
+    box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     border: white solid 2px;
-    transition: top 0ms ease-in-out 200ms,
-        opacity 200ms ease-in-out 0ms,
-        transform 200ms ease-in-out 0ms;
+    transition: top 0ms ease-in-out 200ms, opacity 200ms ease-in-out 0ms, transform 200ms ease-in-out 0ms;
+    -webkit-transition: top 0ms ease-in-out 200ms, ;
+    -moz-transition: top 0ms ease-in-out 200ms, ;
+    -ms-transition: top 0ms ease-in-out 200ms, ;
+    -o-transition: top 0ms ease-in-out 200ms, ;
 }
 
 .popup.active {
@@ -1098,7 +1115,7 @@ video {
     border: none;
     outline: none;
     font-size: 16px;
-    background: blue;
+    background: #591E1E;
     color: #f5f5f5;
     border-radius: 10px;
     cursor: pointer;
@@ -1106,7 +1123,7 @@ video {
 }
 
 .popup .form .form-element button:hover {
-    background-color: darkblue;
+    background-color: #331111;
 
 }
 
@@ -1144,12 +1161,14 @@ video {
     left: 50%;
     opacity: 0;
     transform: translate(-50%, -50%) scale(1.25);
-    backdrop-filter: blur(1px);
+    background: rgba(0, 0, 0, 0.7);
+    /* Make background slightly transparent */
+    backdrop-filter: blur(10px);
     width: 80%;
     /* changed from 380px to 80% for better scaling on smaller screens */
     max-width: 380px;
     padding: 20px 30px;
-    background: transparent;
+
     /* Adjusted for transparency */
     /* box-shadow: 2px 2px 5px 5px rgba(0, 0, 0, 0.15); */
     border-radius: 10px;
@@ -1214,7 +1233,7 @@ video {
     border: none;
     outline: none;
     font-size: 16px;
-    background: blue;
+    background: #591E1E;
     color: #f5f5f5;
     border-radius: 10px;
     cursor: pointer;
@@ -1222,7 +1241,7 @@ video {
 }
 
 .popup1 .form .form-element button:hover {
-    background-color: darkblue;
+    background-color: #331111;
 
 }
 
@@ -1334,10 +1353,15 @@ video {
     border: none;
     outline: none;
     font-size: 16px;
-    background: #222;
+    background: #591E1E;
     color: #f5f5f5;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.popup2 .form .form-element button:hover {
+    background-color: #331111;
+
 }
 
 .popup2 .form .form-element a {
@@ -1445,10 +1469,15 @@ video {
     border: none;
     outline: none;
     font-size: 16px;
-    background: #222;
+    background: #591E1E;
     color: #f5f5f5;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.popup3 .form .form-element button:hover {
+    background-color: #331111;
+
 }
 
 .popup3 .form .form-element a {
