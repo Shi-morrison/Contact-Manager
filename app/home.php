@@ -167,8 +167,8 @@ $username = $_SESSION['username'];
       <div id="deletePopup" class="delete-modal">
         <h3>Confirm Deletion</h3>
         <p>Are you sure you want to delete this contact?</p>
-        <button id="confirmDelete" class="confirm-btn">Yes</button>
-        <button id="cancelDelete" class="cancel-btn">No</button>
+        <button id="confirmDelete" class="confirm-btn1">Yes</button>
+        <button id="cancelDelete" class="cancel-btn1">No</button>
       </div>
 
 
@@ -247,7 +247,7 @@ $username = $_SESSION['username'];
         phone: document.getElementById("phone").value
       };
 
-      
+
       fetch('./LAMPAPI/Contact.php', {
           method: 'POST',
           headers: {
@@ -315,11 +315,12 @@ $username = $_SESSION['username'];
                           <h2 class="name">${contact.first_name} ${contact.last_name}</h2>
                           <h3 class="phone">Phone: ${contact.phone}</h3>
                           <h3 class="email">Email: ${contact.email}</h3>
+                          <div class="contact-actions">
+                            <button class="custom-btn edit-btn" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit</button>
+                            <button class="custom-btn delete-btn" onclick="deleteContact(${contact.contact_id})">Delete</button>
+                          </div>
                       </div>
-                      <div class="contact-actions">
-                          <button class="custom-btn edit-btn" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit</button>
-                          <button class="custom-btn delete-btn" onclick="deleteContact(${contact.contact_id})">Delete</button>
-                      </div>
+                      
                     </div>
                 `;
 
@@ -391,57 +392,115 @@ $username = $_SESSION['username'];
     }
 
 
-    // Delete Contact Function
-    let deleteListenersAdded = false;
+    let currentContactId;
+
+    function confirmDelete() {
+      document.getElementById('deletePopup').style.display = 'none'; // Hide the popup
+
+      console.log('deleteContact called with contactId:', currentContactId);
+      // Your existing code for deleting the contact
+      const data = {
+        contact_id: currentContactId
+      };
+
+      fetch('./LAMPAPI/Contact.php', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+          fetchContacts(); // Refresh the displayed contacts after deletion
+        })
+        .catch(error => {
+          console.log(error.message);
+          console.error("There was a problem with the delete operation:", error.message);
+        });
+    }
+
+    function cancelDelete() {
+      document.getElementById('deletePopup').style.display = 'none'; // Hide the popup
+    }
 
     function deleteContact(contactId) {
+      // Update the current contact id
+      currentContactId = contactId;
+
+
       // Display the delete confirmation popup
       document.getElementById('deletePopup').style.display = 'block';
 
-      // Only add the event listeners once
-      if (!deleteListenersAdded) {
-        // Event listener for canceling deletion
-        document.getElementById('cancelDelete').addEventListener('click', function() {
-          document.getElementById('deletePopup').style.display = 'none';
-        });
+      // Remove the previous event listeners
+      document.getElementById('cancelDelete').removeEventListener('click', cancelDelete);
+      document.getElementById('confirmDelete').removeEventListener('click', confirmDelete);
 
-        // Event listener for confirming deletion
-        document.getElementById('confirmDelete').addEventListener('click', function() {
-          // Hide the popup
-          document.getElementById('deletePopup').style.display = 'none';
-
-          // Your existing code for deleting the contact
-          const data = {
-            contact_id: contactId
-          };
-
-          fetch('./LAMPAPI/Contact.php', {
-              method: 'DELETE',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
-            })
-            .then(response => {
-              if (!response.ok) {
-                throw new Error("Network response was not ok");
-              }
-              return response.json();
-            })
-            .then(data => {
-              console.log(data);
-              fetchContacts(); // Refresh the displayed contacts after deletion
-            })
-            .catch(error => {
-              console.log(error.message);
-              console.error("There was a problem with the delete operation:", error.message);
-            });
-        });
-
-        // Mark the event listeners as added
-        deleteListenersAdded = true;
-      }
+      // Add the new event listeners
+      document.getElementById('cancelDelete').addEventListener('click', cancelDelete);
+      document.getElementById('confirmDelete').addEventListener('click', confirmDelete);
     }
+
+
+    // // Delete Contact Function
+    // let deleteListenersAdded = false;
+
+    // function deleteContact(contactId) {
+    //   // Display the delete confirmation popup
+    //   document.getElementById('deletePopup').style.display = 'block';
+
+    //   // Only add the event listeners once
+    //   if (!deleteListenersAdded) {
+    //     // Event listener for canceling deletion
+    //     document.getElementById('cancelDelete').addEventListener('click', function() {
+    //       document.getElementById('deletePopup').style.display = 'none';
+    //     });
+
+    //     // Event listener for confirming deletion
+    //     document.getElementById('confirmDelete').addEventListener('click', function() {
+    //       // Hide the popup
+    //       document.getElementById('deletePopup').style.display = 'none';
+
+
+    //       console.log('deleteContact called with contactId:', contactId);
+    //       // Your existing code for deleting the contact
+    //       const data = {
+    //         contact_id: contactId
+    //       };
+
+    //       fetch('./LAMPAPI/Contact.php', {
+    //           method: 'DELETE',
+    //           headers: {
+    //             'Content-Type': 'application/json'
+    //           },
+    //           body: JSON.stringify(data)
+    //         })
+    //         .then(response => {
+    //           if (!response.ok) {
+    //             throw new Error("Network response was not ok");
+    //           }
+    //           return response.json();
+    //         })
+    //         .then(data => {
+    //           console.log(data);
+    //           fetchContacts(); // Refresh the displayed contacts after deletion
+    //         })
+    //         .catch(error => {
+    //           console.log(error.message);
+    //           console.error("There was a problem with the delete operation:", error.message);
+    //         });
+    //     });
+
+    //     // Mark the event listeners as added
+    //     deleteListenersAdded = true;
+    //   }
+    // }
 
 
 
