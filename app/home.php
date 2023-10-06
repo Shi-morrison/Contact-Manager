@@ -448,60 +448,6 @@ $username = $_SESSION['username'];
     }
 
 
-    // // Delete Contact Function
-    // let deleteListenersAdded = false;
-
-    // function deleteContact(contactId) {
-    //   // Display the delete confirmation popup
-    //   document.getElementById('deletePopup').style.display = 'block';
-
-    //   // Only add the event listeners once
-    //   if (!deleteListenersAdded) {
-    //     // Event listener for canceling deletion
-    //     document.getElementById('cancelDelete').addEventListener('click', function() {
-    //       document.getElementById('deletePopup').style.display = 'none';
-    //     });
-
-    //     // Event listener for confirming deletion
-    //     document.getElementById('confirmDelete').addEventListener('click', function() {
-    //       // Hide the popup
-    //       document.getElementById('deletePopup').style.display = 'none';
-
-
-    //       console.log('deleteContact called with contactId:', contactId);
-    //       // Your existing code for deleting the contact
-    //       const data = {
-    //         contact_id: contactId
-    //       };
-
-    //       fetch('./LAMPAPI/Contact.php', {
-    //           method: 'DELETE',
-    //           headers: {
-    //             'Content-Type': 'application/json'
-    //           },
-    //           body: JSON.stringify(data)
-    //         })
-    //         .then(response => {
-    //           if (!response.ok) {
-    //             throw new Error("Network response was not ok");
-    //           }
-    //           return response.json();
-    //         })
-    //         .then(data => {
-    //           console.log(data);
-    //           fetchContacts(); // Refresh the displayed contacts after deletion
-    //         })
-    //         .catch(error => {
-    //           console.log(error.message);
-    //           console.error("There was a problem with the delete operation:", error.message);
-    //         });
-    //     });
-
-    //     // Mark the event listeners as added
-    //     deleteListenersAdded = true;
-    //   }
-    // }
-
 
 
     // CHANGE AFTER THIS
