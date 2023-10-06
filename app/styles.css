@@ -229,19 +229,7 @@ html body {
     }
 }
 
-/* html {
-    font-size: 100%;
-}
 
-/*16px*/
-
-/* body {
-    background: white;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    line-height: 1.75;
-    color: #000000;
-}  */
 
 p {
     margin-bottom: 1rem;
@@ -391,14 +379,11 @@ small,
 
 /* Contact display design */
 
-
 .contact-list,
 #hero {
     overflow: auto;
 
 }
-
-
 
 .custom-btn {
     padding: 5px 15px;
@@ -524,15 +509,19 @@ header {
 
 .navbar {
 
-    width: 100%;
-    height: 60px;
-    max-width: 1200px;
-    margin: 0 auto;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* background-color: red */
+    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
 
 .icon-btn {
@@ -586,6 +575,31 @@ header {
     display: flex;
 
 
+}
+
+@media (max-width: 768px) {
+
+    .search,
+    .icon-btn {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .searchButton {
+        width: 20%;
+    }
+
+    .searchTerm {
+        width: 80%;
+    }
+
+    .add-btn {
+        width: 100%;
+    }
+
+    .fa {
+        font-size: 1em;
+    }
 }
 
 .searchTerm {
@@ -722,10 +736,109 @@ header {
     font-size: 1.5em;
 }
 
+
+
+/* Button for username */
+.userNameDisplay {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+
+.userNameDisplay:hover {
+    background-color: #555;
+}
+
+
+/* Log out button design */
+.social-container {
+    position: relative;
+    display: inline-block;
+    width: 164px;
+    height: 36px;
+    perspective: 300px;
+    font-size: 24px;
+    margin: 8px;
+}
+
 @media (max-width: 768px) {
-    .fa {
-        font-size: 1em;
+    .social-container {
+        width: 100%;
+        margin: 1rem 0;
     }
+}
+
+.social-container .social-cube {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: all 0.333s;
+    transform: translateZ(-18px);
+}
+
+.social-container .social-cube .front,
+.social-container .social-cube .back,
+.social-container:hover .social-cube .front {
+    background: var(--color, #000);
+}
+
+.social-container .social-cube .bottom {
+    background: var(--dark-color, #000);
+}
+
+.social-container:hover .social-cube .bottom {
+    background: var(--color, #000);
+}
+
+.social-container .social-cube .front,
+.social-container .social-cube .bottom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    transition: background 0.333s;
+}
+
+.social-container .social-cube .front {
+    transform: rotateX(0deg) translateZ(18px);
+}
+
+.social-container .social-cube .bottom {
+    transform: rotateX(-90deg) translateZ(18px);
+}
+
+.social-container:hover .social-cube {
+    transform: translateZ(-18px) rotateX(90deg);
+}
+
+.social-container.twitter .social-cube .front,
+.social-container.twitter .social-cube .back,
+.social-container.twitter:hover .social-cube .front {
+    background: #311;
+}
+
+.social-container.twitter .social-cube .bottom {
+    background: #311;
+}
+
+.social-container.twitter:hover .social-cube .bottom {
+    background: #311;
 }
 
 /* Logout */
@@ -784,26 +897,66 @@ header {
     background-color: #595959;
 }
 
-/* Responsive Styles */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-    }
 
-    .container,
-    .wrap,
-    .icon-btn {
-        width: 100%;
-        margin-bottom: 1rem;
-        /* Adds some space between elements */
-    }
-
-    .search {
-        width: 100%;
-    }
+#deletePopup {
+    display: none;
+    /* ...other styles... */
 }
 
+.delete-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2c2c2c;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.4);
+    width: 300px;
+    text-align: center;
+}
 
+.delete-modal h3 {
+    color: #ff6666;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.delete-modal p {
+    color: #f1f1f1;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.delete-modal .confirm-btn,
+.delete-modal .cancel-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-modal .confirm-btn {
+    background-color: #ff6666;
+    color: #f1f1f1;
+}
+
+.delete-modal .cancel-btn {
+    background-color: #4a4a4a;
+    color: #e1e1e1;
+}
+
+.delete-modal .confirm-btn:hover {
+    background-color: #ff3333;
+}
+
+.delete-modal .cancel-btn:hover {
+    background-color: #595959;
+}
 
 
 /* HERO SECTION */
@@ -1412,101 +1565,4 @@ video {
     border-radius: 5px;
     background-color: rgba(0, 0, 0, 0.2);
     /* Slightly transparent background. */
-}
-
-
-
-/* Button for username */
-.userNameDisplay {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    -o-border-radius: 4px;
-}
-
-.userNameDisplay:hover {
-    background-color: #555;
-}
-
-/* Log out button design */
-.social-container {
-    position: relative;
-    display: inline-block;
-    width: 164px;
-    height: 36px;
-    perspective: 300px;
-    font-size: 24px;
-    margin: 8px;
-}
-
-.social-container .social-cube {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: all 0.333s;
-    transform: translateZ(-18px);
-}
-
-.social-container .social-cube .front,
-.social-container .social-cube .back,
-.social-container:hover .social-cube .front {
-    background: var(--color, #000);
-}
-
-.social-container .social-cube .bottom {
-    background: var(--dark-color, #000);
-}
-
-.social-container:hover .social-cube .bottom {
-    background: var(--color, #000);
-}
-
-.social-container .social-cube .front,
-.social-container .social-cube .bottom {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    transition: background 0.333s;
-}
-
-.social-container .social-cube .front {
-    transform: rotateX(0deg) translateZ(18px);
-}
-
-.social-container .social-cube .bottom {
-    transform: rotateX(-90deg) translateZ(18px);
-}
-
-.social-container:hover .social-cube {
-    transform: translateZ(-18px) rotateX(90deg);
-}
-
-.social-container.twitter .social-cube .front,
-.social-container.twitter .social-cube .back,
-.social-container.twitter:hover .social-cube .front {
-    background: #311;
-}
-
-.social-container.twitter .social-cube .bottom {
-    background: #311;
-}
-
-.social-container.twitter:hover .social-cube .bottom {
-    background: #311;
 }
