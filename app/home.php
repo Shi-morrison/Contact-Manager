@@ -315,6 +315,7 @@ $username = $_SESSION['username'];
                           <h2 class="name">${contact.first_name} ${contact.last_name}</h2>
                           <h3 class="phone">Phone: ${contact.phone}</h3>
                           <h3 class="email">Email: ${contact.email}</h3>
+                          <h3 class="email">Date Created: ${contact.date_created}</h3>
                           <div class="contact-actions">
                             <button class="custom-btn edit-btn" onclick="openEditModal(${contact.contact_id}, '${contact.first_name}', '${contact.last_name}', '${contact.email}', '${contact.phone}')">Edit</button>
                             <button class="custom-btn delete-btn" onclick="deleteContact(${contact.contact_id})">Delete</button>
